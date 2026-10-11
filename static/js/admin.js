@@ -59,6 +59,7 @@ function switchTab(tabId) {
 
   if (tabId === "tab-overview") {
     refreshStats();
+    loadRecentOverviewLogs();
   }
 }
 
@@ -268,8 +269,10 @@ async function handleEnrollSubmit(e) {
 }
 
 // -----------------------------------------------------------------------------
-// User Management List & Deletion
+// User Management List & Deletion with Live Search
 // -----------------------------------------------------------------------------
+let cachedUsers = [];
+
 async function loadUsersList() {
   const tbody = document.getElementById("usersTableBody");
   if (!tbody) return;
@@ -279,41 +282,63 @@ async function loadUsersList() {
     const data = await res.json();
     if (!data.success) return;
 
-    if (data.users.length === 0) {
-      tbody.innerHTML = `<tr><td colspan="6" style="text-align:center; padding: 32px; color: var(--text-muted);">No users registered yet. Use the Registration tab to enroll staff.</td></tr>`;
-      return;
-    }
-
-    tbody.innerHTML = data.users.map(u => `
-      <tr>
-        <td>
-          <div class="user-avatar-cell">
-            <img src="${u.avatar_path || 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=100'}" class="avatar-img" alt="Avatar">
-            <div>
-              <div style="font-weight: 700; color: var(--text-main);">${u.name}</div>
-              <div style="font-size: 0.8rem; color: var(--text-muted);">${u.email || 'No email'}</div>
-            </div>
-          </div>
-        </td>
-        <td><span style="font-family: var(--font-mono); color: var(--primary); font-weight:600;">${u.employee_id}</span></td>
-        <td>${u.department}</td>
-        <td><span class="badge badge-active">${u.sample_count} Embeddings</span></td>
-        <td style="color: var(--text-muted); font-size: 0.85rem;">${u.created_at || 'Just now'}</td>
-        <td>
-          <button class="btn btn-secondary" style="padding: 6px 12px; color: var(--danger);" onclick="deleteUserPrompt('${u.employee_id}', '${u.name}')">
-            <i data-lucide="trash-2" style="width: 14px;"></i>
-          </button>
-        </td>
-      </tr>
-    `).join("");
-    lucide.createIcons();
+    cachedUsers = data.users || [];
+    renderUsersTable(cachedUsers);
   } catch (err) {
     console.error("Error loading users:", err);
   }
 }
 
+function renderUsersTable(users) {
+  const tbody = document.getElementById("usersTableBody");
+  if (!tbody) return;
+
+  if (users.length === 0) {
+    tbody.innerHTML = `<tr><td colspan="6" style="text-align:center; padding: 32px; color: var(--text-muted);">No users match the search criteria.</td></tr>`;
+    return;
+  }
+
+  tbody.innerHTML = users.map(u => `
+    <tr>
+      <td>
+        <div class="user-avatar-cell">
+          <img src="${u.avatar_path || 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=100'}" class="avatar-img" alt="Avatar">
+          <div>
+            <div style="font-weight: 700; color: var(--text-main);">${u.name}</div>
+            <div style="font-size: 0.8rem; color: var(--text-muted);">${u.email || 'No email registered'}</div>
+          </div>
+        </div>
+      </td>
+      <td><span style="font-family: var(--font-mono); color: var(--primary); font-weight:600;">${u.employee_id}</span></td>
+      <td>${u.department}</td>
+      <td><span class="badge badge-active">${u.sample_count} Embeddings</span></td>
+      <td style="color: var(--text-muted); font-size: 0.85rem;">${u.created_at || 'Just now'}</td>
+      <td>
+        <button class="btn btn-secondary" style="padding: 6px 12px; color: var(--danger);" onclick="deleteUserPrompt('${u.employee_id}', '${u.name}')" title="Delete Profile">
+          <i data-lucide="trash-2" style="width: 14px;"></i>
+        </button>
+      </td>
+    </tr>
+  `).join("");
+  lucide.createIcons();
+}
+
+function filterUsersList() {
+  const query = (document.getElementById("userSearchInput")?.value || "").toLowerCase().trim();
+  if (!query) {
+    renderUsersTable(cachedUsers);
+    return;
+  }
+  const filtered = cachedUsers.filter(u => 
+    (u.name && u.name.toLowerCase().includes(query)) ||
+    (u.employee_id && u.employee_id.toLowerCase().includes(query)) ||
+    (u.department && u.department.toLowerCase().includes(query))
+  );
+  renderUsersTable(filtered);
+}
+
 async function deleteUserPrompt(empId, name) {
-  if (!confirm(`Are you sure you want to remove user '${name}' (${empId}) and delete all stored face embeddings?`)) {
+  if (!confirm(`Are you sure you want to remove staff member '${name}' (${empId}) and delete all stored face embeddings from the biometric gallery?`)) {
     return;
   }
 
@@ -333,8 +358,10 @@ async function deleteUserPrompt(empId, name) {
 }
 
 // -----------------------------------------------------------------------------
-// Attendance Logs & Export
+// Attendance Logs & Export with Live Search
 // -----------------------------------------------------------------------------
+let cachedAttendanceLogs = [];
+
 async function loadAttendanceLogs() {
   const tbody = document.getElementById("attendanceTableBody");
   if (!tbody) return;
@@ -344,37 +371,103 @@ async function loadAttendanceLogs() {
     const data = await res.json();
     if (!data.success) return;
 
-    if (data.logs.length === 0) {
-      tbody.innerHTML = `<tr><td colspan="7" style="text-align:center; padding: 32px; color: var(--text-muted);">No attendance records logged yet today.</td></tr>`;
+    cachedAttendanceLogs = data.logs || [];
+    renderAttendanceTable(cachedAttendanceLogs);
+  } catch (err) {
+    console.error("Error loading logs:", err);
+  }
+}
+
+function renderAttendanceTable(logs) {
+  const tbody = document.getElementById("attendanceTableBody");
+  if (!tbody) return;
+
+  if (logs.length === 0) {
+    tbody.innerHTML = `<tr><td colspan="7" style="text-align:center; padding: 32px; color: var(--text-muted);">No attendance records found.</td></tr>`;
+    return;
+  }
+
+  tbody.innerHTML = logs.map(log => `
+    <tr>
+      <td>
+        <div style="font-weight: 700; color: var(--text-main);">${log.user_name}</div>
+        <div style="font-size: 0.78rem; font-family: var(--font-mono); color: var(--text-dim);">${log.employee_id}</div>
+      </td>
+      <td>${log.department}</td>
+      <td><span style="font-family: var(--font-mono); font-size: 0.88rem;">${log.date_str}</span></td>
+      <td><span style="font-weight: 600; color: var(--cyan); font-family: var(--font-mono);">${log.time_str}</span></td>
+      <td>
+        <span class="badge ${log.status === 'Present' ? 'badge-present' : 'badge-late'}">
+          ${log.status}
+        </span>
+      </td>
+      <td>
+        <span style="font-size: 0.85rem; color: #34d399; font-weight: 600;">${(log.similarity_score * 100).toFixed(1)}% Match</span>
+        <div style="font-size: 0.75rem; color: var(--text-dim);">PAD Score: ${(log.anti_spoof_score * 100).toFixed(0)}%</div>
+      </td>
+      <td>
+        <span style="font-size: 0.82rem; color: var(--text-muted);">${log.device_name}</span>
+      </td>
+    </tr>
+  `).join("");
+  lucide.createIcons();
+}
+
+function filterAttendanceLogs() {
+  const query = (document.getElementById("attendanceSearchInput")?.value || "").toLowerCase().trim();
+  if (!query) {
+    renderAttendanceTable(cachedAttendanceLogs);
+    return;
+  }
+  const filtered = cachedAttendanceLogs.filter(log => 
+    (log.user_name && log.user_name.toLowerCase().includes(query)) ||
+    (log.employee_id && log.employee_id.toLowerCase().includes(query)) ||
+    (log.department && log.department.toLowerCase().includes(query))
+  );
+  renderAttendanceTable(filtered);
+}
+
+// -----------------------------------------------------------------------------
+// Overview Tab: Live Attendance Stream
+// -----------------------------------------------------------------------------
+async function loadRecentOverviewLogs() {
+  const tbody = document.getElementById("overviewRecentLogs");
+  if (!tbody) return;
+
+  try {
+    const res = await fetch("/api/admin/attendance?limit=6");
+    const data = await res.json();
+    if (!data.success) return;
+
+    const logs = data.logs || [];
+    if (logs.length === 0) {
+      tbody.innerHTML = `<tr><td colspan="4" style="text-align:center; padding: 24px; color: var(--text-muted);">No attendance verifications logged today yet.</td></tr>`;
       return;
     }
 
-    tbody.innerHTML = data.logs.map(log => `
+    tbody.innerHTML = logs.slice(0, 6).map(log => `
       <tr>
         <td>
-          <div style="font-weight: 700;">${log.user_name}</div>
-          <div style="font-size: 0.78rem; font-family: var(--font-mono); color: var(--text-dim);">${log.employee_id}</div>
+          <div style="font-weight: 700; color: var(--text-main); font-size: 0.9rem;">${log.user_name}</div>
+          <div style="font-size: 0.75rem; font-family: var(--font-mono); color: var(--text-dim);">${log.employee_id} • ${log.department}</div>
         </td>
-        <td>${log.department}</td>
-        <td><span style="font-family: var(--font-mono); font-size: 0.88rem;">${log.date_str}</span></td>
-        <td><span style="font-weight: 600; color: var(--cyan); font-family: var(--font-mono);">${log.time_str}</span></td>
         <td>
-          <span class="badge ${log.status === 'Present' ? 'badge-present' : 'badge-late'}">
+          <span style="font-weight: 600; color: var(--cyan); font-family: var(--font-mono); font-size: 0.85rem;">${log.time_str}</span>
+        </td>
+        <td>
+          <span class="badge ${log.status === 'Present' ? 'badge-present' : 'badge-late'}" style="font-size: 0.72rem; padding: 3px 8px;">
             ${log.status}
           </span>
         </td>
         <td>
-          <span style="font-size: 0.85rem; color: #34d399;">${(log.similarity_score * 100).toFixed(1)}% Match</span>
-          <div style="font-size: 0.75rem; color: var(--text-dim);">PAD: ${(log.anti_spoof_score * 100).toFixed(0)}%</div>
-        </td>
-        <td>
-          <span style="font-size: 0.82rem; color: var(--text-muted);">${log.device_name}</span>
+          <span style="font-size: 0.82rem; color: #34d399; font-weight: 600;">${(log.similarity_score * 100).toFixed(0)}%</span>
+          <span style="font-size: 0.72rem; color: var(--text-dim); margin-left: 4px;">(PAD ${(log.anti_spoof_score * 100).toFixed(0)}%)</span>
         </td>
       </tr>
     `).join("");
     lucide.createIcons();
   } catch (err) {
-    console.error("Error loading logs:", err);
+    console.warn("Could not load recent overview logs:", err);
   }
 }
 
@@ -424,6 +517,7 @@ async function handleSettingsSubmit(e) {
 document.addEventListener("DOMContentLoaded", () => {
   lucide.createIcons();
   refreshStats();
+  loadRecentOverviewLogs();
 
   const enrollForm = document.getElementById("enrollUserForm");
   if (enrollForm) enrollForm.addEventListener("submit", handleEnrollSubmit);

@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Admin Management Console | Biometric AI</title>
+  <title>BiFed-S Admin Studio | Multimodal Biometric Console</title>
   <link rel="stylesheet" href="/static/css/main.css">
   <link rel="stylesheet" href="/static/css/admin.css">
   <script src="/static/js/sounds.js"></script>
@@ -19,52 +19,56 @@
           <i data-lucide="shield-check"></i>
         </div>
         <div>
-          <div class="brand-title">Admin Management Portal</div>
-          <div style="font-size: 0.75rem; color: var(--text-muted);">Biometric AI Identity & Security Engine</div>
+          <div class="brand-title">
+            <span>BiFed-S</span>
+            <span class="badge badge-fl" style="font-size: 0.68rem; padding: 2px 8px;">Face Modality</span>
+          </div>
+          <div style="font-size: 0.74rem; color: var(--text-muted);">Multimodal Federated Learning Console</div>
         </div>
       </div>
 
-      <!-- Navigation Tabs -->
-      <div class="nav-tabs">
-        <button class="nav-tab-btn active" data-tab="tab-overview" onclick="switchTab('tab-overview')">
-          <i data-lucide="layout-dashboard" style="width: 16px;"></i>
-          <span>Overview</span>
-        </button>
-        <button class="nav-tab-btn" data-tab="tab-enroll" onclick="switchTab('tab-enroll')">
-          <i data-lucide="user-plus" style="width: 16px;"></i>
-          <span>Register Staff</span>
-        </button>
-        <button class="nav-tab-btn" data-tab="tab-users" onclick="switchTab('tab-users')">
-          <i data-lucide="users" style="width: 16px;"></i>
-          <span>Enrolled Directory</span>
-        </button>
-        <button class="nav-tab-btn" data-tab="tab-attendance" onclick="switchTab('tab-attendance')">
-          <i data-lucide="clipboard-list" style="width: 16px;"></i>
-          <span>Attendance Records</span>
-        </button>
-        <button class="nav-tab-btn" data-tab="tab-settings" onclick="switchTab('tab-settings')">
-          <i data-lucide="sliders" style="width: 16px;"></i>
-          <span>System Settings</span>
-        </button>
+      <!-- Navigation Tabs with Clay Pill Styling -->
+      <div class="nav-tabs-wrapper">
+        <div class="nav-tabs">
+          <button class="nav-tab-btn active" data-tab="tab-overview" onclick="switchTab('tab-overview')">
+            <i data-lucide="layout-dashboard" style="width: 16px;"></i>
+            <span>Overview</span>
+          </button>
+          <button class="nav-tab-btn" data-tab="tab-enroll" onclick="switchTab('tab-enroll')">
+            <i data-lucide="user-plus" style="width: 16px;"></i>
+            <span>Register Staff</span>
+          </button>
+          <button class="nav-tab-btn" data-tab="tab-users" onclick="switchTab('tab-users')">
+            <i data-lucide="users" style="width: 16px;"></i>
+            <span>Staff Directory</span>
+          </button>
+          <button class="nav-tab-btn" data-tab="tab-attendance" onclick="switchTab('tab-attendance')">
+            <i data-lucide="clipboard-list" style="width: 16px;"></i>
+            <span>Attendance Audit</span>
+          </button>
+          <button class="nav-tab-btn" data-tab="tab-settings" onclick="switchTab('tab-settings')">
+            <i data-lucide="sliders" style="width: 16px;"></i>
+            <span>AI Calibration</span>
+          </button>
+        </div>
       </div>
 
       <!-- Admin Profile & Kiosk Quick Launch -->
-      <div style="display: flex; align-items: center; gap: 14px;">
-        <a href="/kiosk/scanner" target="_blank" class="btn btn-secondary" style="font-size: 0.85rem; padding: 7px 14px; border-color: rgba(6, 182, 212, 0.4); color: var(--cyan);">
+      <div class="nav-controls">
+        <a href="/kiosk/scanner" target="_blank" class="btn btn-secondary" style="font-size: 0.84rem; padding: 8px 16px; border-color: rgba(6, 182, 212, 0.4); color: var(--cyan);">
           <i data-lucide="external-link" style="width: 15px;"></i>
-          <span>Open Kiosk</span>
+          <span>Launch Kiosk</span>
         </a>
-        <div style="height: 24px; width: 1px; background: var(--border);"></div>
-        <div style="display: flex; align-items: center; gap: 8px;">
-          <div style="width: 34px; height: 34px; border-radius: 50%; background: var(--primary); display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.85rem;">
+        <div class="user-profile-pill">
+          <div class="user-avatar-bubble">
             {{ admin.username[0]|upper }}
           </div>
           <div style="line-height: 1.2;">
-            <div style="font-size: 0.85rem; font-weight: 600;">{{ admin.name }}</div>
-            <div style="font-size: 0.72rem; color: var(--text-dim);">Administrator</div>
+            <div style="font-size: 0.84rem; font-weight: 700;">{{ admin.name }}</div>
+            <div style="font-size: 0.7rem; color: var(--text-dim);">Administrator</div>
           </div>
         </div>
-        <a href="/admin/logout" class="btn btn-secondary" style="padding: 7px 12px; color: var(--danger);" title="Sign Out">
+        <a href="/admin/logout" class="btn btn-secondary" style="padding: 8px 12px; color: var(--danger);" title="Sign Out">
           <i data-lucide="log-out" style="width: 16px;"></i>
         </a>
       </div>
@@ -75,64 +79,197 @@
       
       <!-- ==================== TAB 1: OVERVIEW ==================== -->
       <section id="tab-overview" class="tab-pane active">
-        <div class="stats-grid">
-          <div class="glass-panel stat-card">
-            <div class="stat-card-header">
-              <span>Total Registered Staff</span>
-              <div class="stat-icon-glow" style="background: rgba(59, 130, 246, 0.15); color: var(--primary);">
-                <i data-lucide="users"></i>
-              </div>
+        <!-- Welcome & System Pulse Bar -->
+        <div class="clay-card overview-welcome-card">
+          <div>
+            <div class="welcome-info-title">
+              Good day, <span class="gradient-text">{{ admin.name }}</span>
             </div>
-            <div class="stat-val" id="statTotalUsers">{{ stats.total_users }}</div>
-            <div style="color: var(--text-muted); font-size: 0.82rem; margin-top: 6px;">Biometric embeddings stored</div>
+            <p style="color: var(--text-muted); font-size: 0.88rem;">
+              BiFed-S Face Recognition & Anti-Spoofing Edge Client is active and monitoring continuous check-ins.
+            </p>
           </div>
-
-          <div class="glass-panel stat-card">
-            <div class="stat-card-header">
-              <span>Today's Present</span>
-              <div class="stat-icon-glow" style="background: rgba(16, 185, 129, 0.15); color: var(--success);">
-                <i data-lucide="user-check"></i>
-              </div>
+          <div style="display: flex; align-items: center; gap: 14px; flex-wrap: wrap;">
+            <div class="pulse-badge">
+              <span class="pulse-dot-green"></span>
+              <span>AI INFERENCE ENGINE ACTIVE</span>
             </div>
-            <div class="stat-val" style="color: #34d399;" id="statTodayPresent">{{ stats.today_present }}</div>
-            <div style="color: var(--text-muted); font-size: 0.82rem; margin-top: 6px;">Verified via continuous kiosk</div>
-          </div>
-
-          <div class="glass-panel stat-card">
-            <div class="stat-card-header">
-              <span>Late Arrivals</span>
-              <div class="stat-icon-glow" style="background: rgba(245, 158, 11, 0.15); color: var(--warning);">
-                <i data-lucide="clock-alert"></i>
-              </div>
-            </div>
-            <div class="stat-val" style="color: #fbbf24;" id="statTodayLate">{{ stats.today_late }}</div>
-            <div style="color: var(--text-muted); font-size: 0.82rem; margin-top: 6px;">Clocked in after cutoff</div>
-          </div>
-
-          <div class="glass-panel stat-card">
-            <div class="stat-card-header">
-              <span>Attendance Rate</span>
-              <div class="stat-icon-glow" style="background: rgba(6, 182, 212, 0.15); color: var(--cyan);">
-                <i data-lucide="trending-up"></i>
-              </div>
-            </div>
-            <div class="stat-val" style="color: var(--cyan);" id="statAttendanceRate">{{ stats.attendance_rate }}</div>
-            <div style="color: var(--text-muted); font-size: 0.82rem; margin-top: 6px;">Overall staff compliance</div>
+            <button class="btn btn-primary" onclick="switchTab('tab-enroll')">
+              <i data-lucide="user-plus" style="width: 16px;"></i>
+              <span>Enroll Staff</span>
+            </button>
           </div>
         </div>
 
-        <!-- Quick Action Banner -->
-        <div class="glass-panel" style="padding: 28px; display: flex; align-items: center; justify-content: space-between; margin-bottom: 32px; background: linear-gradient(135deg, rgba(20,29,51,0.9), rgba(15,23,42,0.9)); border: 1px solid var(--border-active);">
-          <div>
-            <h2 style="font-size: 1.35rem; font-weight: 700; margin-bottom: 6px;">Ready to Enroll New Users?</h2>
-            <p style="color: var(--text-muted); font-size: 0.9rem;">
-              Capture live 512-d ArcFace embeddings with real-time MiniFASNet anti-spoofing quality gating.
-            </p>
+        <!-- 4 Claymorphic Key Metric Cards -->
+        <div class="stats-grid">
+          <!-- Card 1 -->
+          <div class="clay-card stat-card">
+            <div class="stat-card-header">
+              <span>Total Enrolled Staff</span>
+              <div class="clay-icon-bubble" style="background: linear-gradient(135deg, rgba(59,130,246,0.2), rgba(37,99,235,0.3)); color: var(--primary);">
+                <i data-lucide="users" style="width: 22px;"></i>
+              </div>
+            </div>
+            <div class="stat-val" id="statTotalUsers">{{ stats.total_users }}</div>
+            <div class="stat-footer-text">
+              <i data-lucide="database" style="width: 14px; color: var(--primary);"></i>
+              <span>Active embeddings in gallery</span>
+            </div>
           </div>
-          <button class="btn btn-primary" onclick="switchTab('tab-enroll')">
-            <i data-lucide="user-plus" style="width: 18px;"></i>
-            <span>Launch Registration Studio</span>
-          </button>
+
+          <!-- Card 2 -->
+          <div class="clay-card stat-card">
+            <div class="stat-card-header">
+              <span>Today's Present</span>
+              <div class="clay-icon-bubble" style="background: linear-gradient(135deg, rgba(16,185,129,0.2), rgba(5,150,105,0.3)); color: var(--success);">
+                <i data-lucide="user-check" style="width: 22px;"></i>
+              </div>
+            </div>
+            <div class="stat-val" style="color: #34d399;" id="statTodayPresent">{{ stats.today_present }}</div>
+            <div class="stat-footer-text">
+              <i data-lucide="check-circle" style="width: 14px; color: var(--success);"></i>
+              <span>Verified via kiosk scanner</span>
+            </div>
+          </div>
+
+          <!-- Card 3 -->
+          <div class="clay-card stat-card">
+            <div class="stat-card-header">
+              <span>Late Arrivals</span>
+              <div class="clay-icon-bubble" style="background: linear-gradient(135deg, rgba(245,158,11,0.2), rgba(217,119,6,0.3)); color: var(--warning);">
+                <i data-lucide="clock-alert" style="width: 22px;"></i>
+              </div>
+            </div>
+            <div class="stat-val" style="color: #fbbf24;" id="statTodayLate">{{ stats.today_late }}</div>
+            <div class="stat-footer-text">
+              <i data-lucide="alert-triangle" style="width: 14px; color: var(--warning);"></i>
+              <span>Clocked in after {{ settings.get('late_cutoff_time', '09:30') }}</span>
+            </div>
+          </div>
+
+          <!-- Card 4 -->
+          <div class="clay-card stat-card">
+            <div class="stat-card-header">
+              <span>Attendance Rate</span>
+              <div class="clay-icon-bubble" style="background: linear-gradient(135deg, rgba(6,182,212,0.2), rgba(2,132,199,0.3)); color: var(--cyan);">
+                <i data-lucide="trending-up" style="width: 22px;"></i>
+              </div>
+            </div>
+            <div class="stat-val" style="color: var(--cyan);" id="statAttendanceRate">{{ stats.attendance_rate }}</div>
+            <div class="stat-footer-text">
+              <i data-lucide="bar-chart-2" style="width: 14px; color: var(--cyan);"></i>
+              <span>Overall staff compliance today</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Two-Column Overview Layout: Live Feed & Telemetry -->
+        <div class="overview-dashboard-grid">
+          <!-- Left: Recent Attendance Feed -->
+          <div class="clay-card data-table-card">
+            <div class="table-header-bar">
+              <div>
+                <h3 style="font-size: 1.15rem; font-weight: 700; display: flex; align-items: center; gap: 8px;">
+                  <i data-lucide="activity" style="width: 18px; color: var(--primary);"></i>
+                  <span>Recent Attendance Punches</span>
+                </h3>
+                <div style="font-size: 0.8rem; color: var(--text-muted);">Real-time kiosk verifications stream</div>
+              </div>
+              <div style="display: flex; gap: 8px;">
+                <button class="btn btn-secondary" style="font-size: 0.82rem; padding: 7px 14px;" onclick="switchTab('tab-attendance')">
+                  <span>View All</span>
+                  <i data-lucide="arrow-right" style="width: 14px;"></i>
+                </button>
+              </div>
+            </div>
+
+            <div class="table-responsive">
+              <table class="admin-table">
+                <thead>
+                  <tr>
+                    <th>Staff Member</th>
+                    <th>Time</th>
+                    <th>Status</th>
+                    <th>AI Match & PAD</th>
+                  </tr>
+                </thead>
+                <tbody id="overviewRecentLogs">
+                  <!-- Dynamically populated via admin.js -->
+                  <tr><td colspan="4" style="text-align: center; padding: 24px; color: var(--text-muted);">Loading live check-in feed...</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Right Column: System Telemetry & Quick Launchpad -->
+          <div style="display: flex; flex-direction: column; gap: 24px;">
+            <!-- BiFed-S FL Modality Card -->
+            <div class="clay-card telemetry-card">
+              <div style="display: flex; align-items: center; justify-content: space-between;">
+                <h3 style="font-size: 1.05rem; font-weight: 700; display: flex; align-items: center; gap: 8px;">
+                  <i data-lucide="cpu" style="width: 18px; color: var(--cyan);"></i>
+                  <span>BiFed-S FL Client Telemetry</span>
+                </h3>
+                <span class="badge badge-active" style="font-size: 0.72rem;">Online</span>
+              </div>
+
+              <div class="telemetry-item">
+                <span class="telemetry-label"><i data-lucide="shield" style="width: 14px;"></i> Modality Architecture</span>
+                <span class="telemetry-value">Visual (Face + PAD)</span>
+              </div>
+              <div class="telemetry-item">
+                <span class="telemetry-label"><i data-lucide="brain" style="width: 14px;"></i> Feature Extractor</span>
+                <span class="telemetry-value">ArcFace (512-d)</span>
+              </div>
+              <div class="telemetry-item">
+                <span class="telemetry-label"><i data-lucide="scan" style="width: 14px;"></i> Liveness Ensemble</span>
+                <span class="telemetry-value">MiniFASNet V2+V1SE</span>
+              </div>
+              <div class="telemetry-item">
+                <span class="telemetry-label"><i data-lucide="lock" style="width: 14px;"></i> Privacy Protocol</span>
+                <span class="telemetry-value" style="color: #34d399;">Local Edge Inference</span>
+              </div>
+            </div>
+
+            <!-- Quick Actions Launchpad -->
+            <div class="clay-card telemetry-card">
+              <h3 style="font-size: 1.05rem; font-weight: 700; display: flex; align-items: center; gap: 8px;">
+                <i data-lucide="zap" style="width: 18px; color: #fbbf24;"></i>
+                <span>Quick Actions</span>
+              </h3>
+
+              <div class="quick-actions-grid">
+                <div class="quick-action-btn" onclick="switchTab('tab-enroll')">
+                  <div class="clay-icon-bubble" style="width: 38px; height: 38px; background: rgba(59,130,246,0.2); color: var(--primary);">
+                    <i data-lucide="user-plus" style="width: 18px;"></i>
+                  </div>
+                  <span>Enroll Staff</span>
+                </div>
+
+                <a href="/kiosk/scanner" target="_blank" class="quick-action-btn">
+                  <div class="clay-icon-bubble" style="width: 38px; height: 38px; background: rgba(6,182,212,0.2); color: var(--cyan);">
+                    <i data-lucide="scan-face" style="width: 18px;"></i>
+                  </div>
+                  <span>Open Kiosk</span>
+                </a>
+
+                <a href="/api/admin/export-attendance" class="quick-action-btn">
+                  <div class="clay-icon-bubble" style="width: 38px; height: 38px; background: rgba(16,185,129,0.2); color: var(--success);">
+                    <i data-lucide="download" style="width: 18px;"></i>
+                  </div>
+                  <span>Export CSV</span>
+                </a>
+
+                <div class="quick-action-btn" onclick="switchTab('tab-settings')">
+                  <div class="clay-icon-bubble" style="width: 38px; height: 38px; background: rgba(139,92,246,0.2); color: var(--purple);">
+                    <i data-lucide="sliders" style="width: 18px;"></i>
+                  </div>
+                  <span>Tune Thresholds</span>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -140,10 +277,16 @@
       <section id="tab-enroll" class="tab-pane">
         <div class="enrollment-studio">
           <!-- Camera Preview Panel -->
-          <div class="glass-panel" style="padding: 24px;">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
-              <h2 style="font-size: 1.15rem; font-weight: 700;">Biometric Capture Stream</h2>
-              <button class="btn btn-secondary" style="padding: 6px 12px; font-size: 0.8rem;" onclick="resetEnrollmentSession()">
+          <div class="clay-card" style="padding: 26px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px;">
+              <div>
+                <h2 style="font-size: 1.2rem; font-weight: 700; display: flex; align-items: center; gap: 8px;">
+                  <i data-lucide="camera" style="width: 20px; color: var(--cyan);"></i>
+                  <span>Biometric Capture Stream</span>
+                </h2>
+                <div style="font-size: 0.8rem; color: var(--text-muted);">Real-time quality gate & SCRFD facial landmark tracking</div>
+              </div>
+              <button class="btn btn-secondary" style="padding: 6px 14px; font-size: 0.82rem;" onclick="resetEnrollmentSession()">
                 <i data-lucide="rotate-ccw" style="width: 14px;"></i> Reset
               </button>
             </div>
@@ -153,18 +296,18 @@
               <canvas id="enrollCanvas"></canvas>
 
               <div class="camera-overlay-hud">
-                <div id="enrollQualityBadge" class="hud-status-badge">Initializing...</div>
-                <div style="background: rgba(0,0,0,0.6); padding: 4px 10px; border-radius: 9999px; font-size: 0.75rem; font-family: var(--font-mono);">
+                <div id="enrollQualityBadge" class="hud-status-badge">Waiting for face...</div>
+                <div style="background: rgba(0,0,0,0.65); padding: 5px 12px; border-radius: var(--radius-full); font-size: 0.75rem; font-family: var(--font-mono); border: 1px solid rgba(255,255,255,0.1);">
                   640x640 SCRFD
                 </div>
               </div>
             </div>
 
             <!-- Capture Progress -->
-            <div style="margin-top: 16px;">
-              <div style="display: flex; justify-content: space-between; font-size: 0.85rem; font-weight: 600;">
+            <div style="margin-top: 18px;">
+              <div style="display: flex; justify-content: space-between; font-size: 0.86rem; font-weight: 600;">
                 <span id="enrollStatusText" style="color: #93c5fd;">Position face in center</span>
-                <span id="enrollSampleCountText" style="color: var(--text-muted);">0 / 5 samples</span>
+                <span id="enrollSampleCountText" style="color: var(--text-muted); font-family: var(--font-mono);">0 / 5 samples</span>
               </div>
               <div class="sample-progress-bar">
                 <div id="enrollProgressFill" class="sample-progress-fill"></div>
@@ -173,40 +316,53 @@
           </div>
 
           <!-- User Details Form -->
-          <div class="glass-panel" style="padding: 28px;">
-            <h2 style="font-size: 1.25rem; font-weight: 700; margin-bottom: 6px;">Staff Registration Details</h2>
+          <div class="clay-card" style="padding: 28px;">
+            <h2 style="font-size: 1.25rem; font-weight: 700; margin-bottom: 6px; display: flex; align-items: center; gap: 8px;">
+              <i data-lucide="user-check" style="width: 20px; color: var(--primary);"></i>
+              <span>Staff Registration Details</span>
+            </h2>
             <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 22px;">
-              Face embeddings will be automatically extracted, normalized, and linked to this profile.
+              High-dimensional 512-d embeddings will be normalized and linked to this employee profile.
             </p>
 
             <form id="enrollUserForm">
               <div class="form-group">
-                <label class="form-label" for="enrollEmpId">Employee / Student ID *</label>
+                <label class="form-label" for="enrollEmpId">
+                  <i data-lucide="hash" style="width: 14px;"></i> Employee / Student ID *
+                </label>
                 <input type="text" id="enrollEmpId" class="form-control" placeholder="EMP-1001" required>
               </div>
 
               <div class="form-group">
-                <label class="form-label" for="enrollName">Full Name *</label>
+                <label class="form-label" for="enrollName">
+                  <i data-lucide="user" style="width: 14px;"></i> Full Name *
+                </label>
                 <input type="text" id="enrollName" class="form-control" placeholder="Jane Doe" required>
               </div>
 
               <div class="form-group">
-                <label class="form-label" for="enrollDept">Department / Class *</label>
-                <input type="text" id="enrollDept" class="form-control" placeholder="Engineering / AI Lab" required>
+                <label class="form-label" for="enrollDept">
+                  <i data-lucide="building" style="width: 14px;"></i> Department / Class *
+                </label>
+                <input type="text" id="enrollDept" class="form-control" placeholder="AI Research / Engineering" required>
               </div>
 
               <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px;">
                 <div class="form-group">
-                  <label class="form-label" for="enrollEmail">Email Address</label>
+                  <label class="form-label" for="enrollEmail">
+                    <i data-lucide="mail" style="width: 14px;"></i> Email Address
+                  </label>
                   <input type="email" id="enrollEmail" class="form-control" placeholder="jane@company.com">
                 </div>
                 <div class="form-group">
-                  <label class="form-label" for="enrollPhone">Phone Number</label>
+                  <label class="form-label" for="enrollPhone">
+                    <i data-lucide="phone" style="width: 14px;"></i> Phone Number
+                  </label>
                   <input type="tel" id="enrollPhone" class="form-control" placeholder="+1 (555) 000-0000">
                 </div>
               </div>
 
-              <button type="submit" id="enrollSubmitBtn" class="btn btn-primary" style="width: 100%; height: 48px; margin-top: 14px;">
+              <button type="submit" id="enrollSubmitBtn" class="btn btn-primary" style="width: 100%; height: 50px; margin-top: 14px; font-size: 0.96rem;">
                 <span>Complete Biometric Registration</span>
                 <i data-lucide="check" style="width: 18px;"></i>
               </button>
@@ -217,16 +373,23 @@
 
       <!-- ==================== TAB 3: ENROLLED DIRECTORY ==================== -->
       <section id="tab-users" class="tab-pane">
-        <div class="glass-panel data-table-card">
+        <div class="clay-card data-table-card">
           <div class="table-header-bar">
             <div>
-              <h2 style="font-size: 1.2rem; font-weight: 700;">Enrolled Staff Database</h2>
-              <div style="font-size: 0.82rem; color: var(--text-muted);">Successfully enrolled users with stored biometric vectors</div>
+              <h2 style="font-size: 1.25rem; font-weight: 700; display: flex; align-items: center; gap: 8px;">
+                <i data-lucide="users" style="width: 20px; color: var(--primary);"></i>
+                <span>Enrolled Staff Directory</span>
+              </h2>
+              <div style="font-size: 0.82rem; color: var(--text-muted);">Manage registered users and stored face embedding vectors</div>
             </div>
-            <button class="btn btn-primary" style="font-size: 0.85rem;" onclick="switchTab('tab-enroll')">
-              <i data-lucide="user-plus" style="width: 16px;"></i>
-              <span>Add New Staff</span>
-            </button>
+
+            <div style="display: flex; gap: 12px; align-items: center; flex-wrap: wrap;">
+              <input type="text" id="userSearchInput" class="form-control" placeholder="Search by name, ID, or dept..." style="padding: 8px 14px; font-size: 0.85rem; width: 240px;" oninput="filterUsersList()">
+              <button class="btn btn-primary" style="font-size: 0.85rem;" onclick="switchTab('tab-enroll')">
+                <i data-lucide="user-plus" style="width: 16px;"></i>
+                <span>Enroll Staff</span>
+              </button>
+            </div>
           </div>
 
           <div class="table-responsive">
@@ -251,13 +414,18 @@
 
       <!-- ==================== TAB 4: ATTENDANCE RECORDS ==================== -->
       <section id="tab-attendance" class="tab-pane">
-        <div class="glass-panel data-table-card">
+        <div class="clay-card data-table-card">
           <div class="table-header-bar">
             <div>
-              <h2 style="font-size: 1.2rem; font-weight: 700;">Live Attendance & Audit Records</h2>
-              <div style="font-size: 0.82rem; color: var(--text-muted);">Timestamped verifications recorded by the continuous kiosk scanner</div>
+              <h2 style="font-size: 1.25rem; font-weight: 700; display: flex; align-items: center; gap: 8px;">
+                <i data-lucide="clipboard-list" style="width: 20px; color: var(--cyan);"></i>
+                <span>Live Attendance & Verification Audit</span>
+              </h2>
+              <div style="font-size: 0.82rem; color: var(--text-muted);">Complete immutable audit logs recorded by continuous kiosk scanners</div>
             </div>
-            <div style="display: flex; gap: 10px;">
+
+            <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
+              <input type="text" id="attendanceSearchInput" class="form-control" placeholder="Search staff or ID..." style="padding: 8px 14px; font-size: 0.85rem; width: 200px;" oninput="filterAttendanceLogs()">
               <a href="/api/admin/export-attendance" class="btn btn-secondary" style="font-size: 0.85rem;">
                 <i data-lucide="download" style="width: 16px;"></i>
                 <span>Export CSV</span>
@@ -292,49 +460,78 @@
 
       <!-- ==================== TAB 5: SYSTEM SETTINGS ==================== -->
       <section id="tab-settings" class="tab-pane">
-        <div class="glass-panel" style="max-width: 720px; margin: 0 auto; padding: 32px;">
-          <h2 style="font-size: 1.3rem; font-weight: 700; margin-bottom: 6px;">AI Engine & Security Configuration</h2>
-          <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 24px;">
-            Tune recognition match thresholds, anti-spoofing sensitivities, and late cutoff rules.
-          </p>
-
-          <form id="settingsForm">
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 18px;">
-              <div class="form-group">
-                <label class="form-label" for="cfgMatchThresh">ArcFace Match Threshold (Cosine Sim)</label>
-                <input type="number" step="0.01" min="0.1" max="1.0" id="cfgMatchThresh" class="form-control" value="{{ settings.get('match_thresh', '0.45') }}" required>
-                <small style="color: var(--text-dim); font-size: 0.75rem;">Default: 0.45. Higher values require stricter facial similarity.</small>
-              </div>
-
-              <div class="form-group">
-                <label class="form-label" for="cfgMargin">Runner-up Margin Separation</label>
-                <input type="number" step="0.01" min="0.01" max="0.5" id="cfgMargin" class="form-control" value="{{ settings.get('margin', '0.08') }}" required>
-                <small style="color: var(--text-dim); font-size: 0.75rem;">Default: 0.08. Reject matches if runner-up is too close.</small>
-              </div>
-
-              <div class="form-group">
-                <label class="form-label" for="cfgLiveScoreThresh">MiniFASNet Liveness Threshold (PAD)</label>
-                <input type="number" step="0.01" min="0.1" max="1.0" id="cfgLiveScoreThresh" class="form-control" value="{{ settings.get('live_score_thresh', '0.68') }}" required>
-                <small style="color: var(--text-dim); font-size: 0.75rem;">Default: 0.68. Probability that the face is real (not photo/screen).</small>
-              </div>
-
-              <div class="form-group">
-                <label class="form-label" for="cfgCooldown">Scan Cooldown Window (Minutes)</label>
-                <input type="number" min="1" max="120" id="cfgCooldown" class="form-control" value="{{ settings.get('cooldown_minutes', '5') }}" required>
-                <small style="color: var(--text-dim); font-size: 0.75rem;">Prevents duplicate check-ins if someone stands near the kiosk.</small>
-              </div>
+        <div style="max-width: 860px; margin: 0 auto;">
+          <div class="clay-card" style="padding: 34px;">
+            <div style="margin-bottom: 24px;">
+              <h2 style="font-size: 1.35rem; font-weight: 800; display: flex; align-items: center; gap: 10px;">
+                <i data-lucide="sliders" style="width: 22px; color: var(--primary);"></i>
+                <span>AI Engine & Security Calibration</span>
+              </h2>
+              <p style="font-size: 0.86rem; color: var(--text-muted); margin-top: 6px;">
+                Configure ArcFace recognition similarity bounds, MiniFASNet Presentation Attack Detection (PAD) thresholds, and operational rules.
+              </p>
             </div>
 
-            <div class="form-group" style="margin-top: 10px;">
-              <label class="form-label" for="cfgLateTime">Late Arrival Cutoff Time (HH:MM)</label>
-              <input type="time" id="cfgLateTime" class="form-control" value="{{ settings.get('late_cutoff_time', '09:30') }}" style="max-width: 200px;" required>
-            </div>
+            <form id="settingsForm">
+              <!-- Category 1: Recognition Engine -->
+              <div style="margin-bottom: 28px;">
+                <h3 style="font-size: 1.05rem; font-weight: 700; color: #93c5fd; margin-bottom: 14px; display: flex; align-items: center; gap: 8px;">
+                  <i data-lucide="scan-face" style="width: 16px;"></i>
+                  <span>ArcFace Recognition Parameters</span>
+                </h3>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 18px;">
+                  <div class="form-group">
+                    <label class="form-label" for="cfgMatchThresh">Match Cosine Threshold</label>
+                    <input type="number" step="0.01" min="0.1" max="1.0" id="cfgMatchThresh" class="form-control" value="{{ settings.get('match_thresh', '0.45') }}" required>
+                    <small style="color: var(--text-dim); font-size: 0.76rem;">Default: 0.45. Higher values enforce stricter identity matching.</small>
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label" for="cfgMargin">Runner-up Margin Separation</label>
+                    <input type="number" step="0.01" min="0.01" max="0.5" id="cfgMargin" class="form-control" value="{{ settings.get('margin', '0.08') }}" required>
+                    <small style="color: var(--text-dim); font-size: 0.76rem;">Default: 0.08. Rejects ambiguous matches between close faces.</small>
+                  </div>
+                </div>
+              </div>
 
-            <button type="submit" class="btn btn-primary" style="margin-top: 16px; padding: 12px 28px;">
-              <i data-lucide="save" style="width: 16px;"></i>
-              <span>Save System Settings</span>
-            </button>
-          </form>
+              <!-- Category 2: Anti-Spoofing & Liveness -->
+              <div style="margin-bottom: 28px;">
+                <h3 style="font-size: 1.05rem; font-weight: 700; color: #67e8f9; margin-bottom: 14px; display: flex; align-items: center; gap: 8px;">
+                  <i data-lucide="shield-alert" style="width: 16px;"></i>
+                  <span>Presentation Attack Detection (PAD)</span>
+                </h3>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 18px;">
+                  <div class="form-group">
+                    <label class="form-label" for="cfgLiveScoreThresh">MiniFASNet Liveness Threshold</label>
+                    <input type="number" step="0.01" min="0.1" max="1.0" id="cfgLiveScoreThresh" class="form-control" value="{{ settings.get('live_score_thresh', '0.68') }}" required>
+                    <small style="color: var(--text-dim); font-size: 0.76rem;">Default: 0.68. Probability that the face is real (not photo/screen).</small>
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label" for="cfgCooldown">Scan Cooldown Window (Minutes)</label>
+                    <input type="number" min="1" max="120" id="cfgCooldown" class="form-control" value="{{ settings.get('cooldown_minutes', '5') }}" required>
+                    <small style="color: var(--text-dim); font-size: 0.76rem;">Prevents duplicate punches if an employee lingers near the camera.</small>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Category 3: Operational Schedules -->
+              <div style="margin-bottom: 24px;">
+                <h3 style="font-size: 1.05rem; font-weight: 700; color: #fde047; margin-bottom: 14px; display: flex; align-items: center; gap: 8px;">
+                  <i data-lucide="clock" style="width: 16px;"></i>
+                  <span>Attendance Schedule Rules</span>
+                </h3>
+                <div class="form-group">
+                  <label class="form-label" for="cfgLateTime">Late Arrival Cutoff Time (HH:MM)</label>
+                  <input type="time" id="cfgLateTime" class="form-control" value="{{ settings.get('late_cutoff_time', '09:30') }}" style="max-width: 240px;" required>
+                  <small style="color: var(--text-dim); font-size: 0.76rem;">Punches recorded after this time are automatically marked as Late.</small>
+                </div>
+              </div>
+
+              <button type="submit" class="btn btn-primary" style="padding: 14px 32px; font-size: 0.95rem;">
+                <i data-lucide="save" style="width: 18px;"></i>
+                <span>Save Configuration Changes</span>
+              </button>
+            </form>
+          </div>
         </div>
       </section>
 

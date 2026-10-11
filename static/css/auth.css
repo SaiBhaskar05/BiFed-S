@@ -1,5 +1,5 @@
 /* ==========================================================================
-   Authentication & Portal Selector Styles
+   Authentication & Portal Selector Styles — Claymorphic Edition
    ========================================================================== */
 .auth-wrapper {
   min-height: 100vh;
@@ -7,21 +7,21 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 24px;
+  padding: 32px 20px;
   position: relative;
 }
 
 .portal-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-  gap: 28px;
-  max-width: 900px;
+  gap: 32px;
+  max-width: 960px;
   width: 100%;
-  margin-top: 36px;
+  margin-top: 40px;
 }
 
 .portal-card {
-  padding: 36px 28px;
+  padding: 40px 32px;
   text-align: center;
   cursor: pointer;
   position: relative;
@@ -30,7 +30,12 @@
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
-  min-height: 380px;
+  min-height: 400px;
+  background: linear-gradient(145deg, #17243e 0%, #111a2f 100%);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: var(--clay-shadow);
+  border-radius: var(--radius-xl);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .portal-card::before {
@@ -39,126 +44,162 @@
   top: 0;
   left: 0;
   right: 0;
-  height: 4px;
+  height: 5px;
   background: var(--primary-gradient);
-  opacity: 0;
-  transition: opacity 0.3s ease;
+  opacity: 0.8;
+  transition: height 0.3s ease;
 }
 
 .portal-card.kiosk-card::before {
-  background: linear-gradient(135deg, #06b6d4, #10b981);
-}
-
-.portal-card:hover::before {
-  opacity: 1;
+  background: var(--cyan-gradient);
 }
 
 .portal-card:hover {
-  transform: translateY(-6px);
-  box-shadow: var(--shadow-lg);
+  transform: translateY(-8px);
+  box-shadow: var(--clay-shadow-hover);
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+.portal-card:hover::before {
+  height: 7px;
 }
 
 .portal-icon-wrapper {
-  width: 80px;
-  height: 80px;
-  border-radius: 20px;
-  background: rgba(59, 130, 246, 0.1);
-  border: 1px solid rgba(59, 130, 246, 0.25);
+  width: 84px;
+  height: 84px;
+  border-radius: var(--radius-lg);
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.2) 0%, rgba(37, 99, 235, 0.3) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.15);
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 20px;
+  margin-bottom: 24px;
   color: var(--primary);
-  font-size: 32px;
+  font-size: 34px;
+  box-shadow: 
+    0 10px 24px rgba(0, 0, 0, 0.35),
+    inset 1.5px 1.5px 2px rgba(255, 255, 255, 0.3),
+    inset -2px -2px 4px rgba(0, 0, 0, 0.35);
   transition: all 0.3s ease;
 }
 
 .portal-card:hover .portal-icon-wrapper {
-  transform: scale(1.1);
-  box-shadow: 0 0 25px var(--primary-glow);
+  transform: scale(1.08);
+  box-shadow: 0 0 30px var(--primary-glow);
 }
 
 .kiosk-card .portal-icon-wrapper {
-  background: rgba(6, 182, 212, 0.1);
-  border-color: rgba(6, 182, 212, 0.25);
+  background: linear-gradient(135deg, rgba(6, 182, 212, 0.2) 0%, rgba(2, 132, 199, 0.3) 100%);
   color: var(--cyan);
 }
 
 .kiosk-card:hover .portal-icon-wrapper {
-  box-shadow: 0 0 25px var(--cyan-glow);
+  box-shadow: 0 0 30px var(--cyan-glow);
 }
 
 .portal-title {
-  font-size: 1.45rem;
-  font-weight: 700;
-  margin-bottom: 10px;
+  font-size: 1.5rem;
+  font-weight: 800;
+  margin-bottom: 12px;
+  letter-spacing: -0.3px;
 }
 
 .portal-desc {
   font-size: 0.92rem;
   color: var(--text-muted);
   line-height: 1.6;
-  margin-bottom: 24px;
+  margin-bottom: 28px;
 }
 
-/* Auth Card for Login Forms */
+/* ==========================================================================
+   Auth Card for Login Forms
+   ========================================================================== */
 .auth-card {
   width: 100%;
-  max-width: 440px;
-  padding: 40px;
+  max-width: 460px;
+  padding: 44px 38px;
   position: relative;
+  background: linear-gradient(145deg, #17243e 0%, #10192e 100%);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--clay-shadow);
 }
 
 .auth-header {
   text-align: center;
-  margin-bottom: 30px;
-}
-
-.auth-logo {
-  font-size: 2.2rem;
-  margin-bottom: 12px;
+  margin-bottom: 32px;
 }
 
 .auth-title {
-  font-size: 1.5rem;
-  font-weight: 700;
+  font-size: 1.6rem;
+  font-weight: 800;
   letter-spacing: -0.5px;
 }
 
 .auth-subtitle {
   font-size: 0.88rem;
   color: var(--text-muted);
-  margin-top: 6px;
+  margin-top: 8px;
 }
 
+/* ==========================================================================
+   Claymorphic PIN Keypad
+   ========================================================================== */
 .pin-keypad {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 12px;
-  margin-top: 18px;
+  gap: 14px;
+  margin-top: 20px;
 }
 
 .pin-btn {
-  height: 58px;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-sm);
+  height: 62px;
+  background: linear-gradient(145deg, #182643 0%, #111a30 100%);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: var(--radius-md);
   color: var(--text-main);
-  font-size: 1.35rem;
-  font-weight: 600;
+  font-size: 1.45rem;
+  font-weight: 700;
   cursor: pointer;
-  transition: all 0.15s ease;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
   display: flex;
   align-items: center;
   justify-content: center;
+  box-shadow: 
+    0 8px 18px rgba(0, 0, 0, 0.35),
+    inset 1px 1px 2px rgba(255, 255, 255, 0.2),
+    inset -2px -2px 4px rgba(0, 0, 0, 0.35);
+  user-select: none;
 }
 
 .pin-btn:hover {
-  background: rgba(255, 255, 255, 0.12);
-  border-color: var(--cyan);
-  box-shadow: 0 0 12px var(--cyan-glow);
+  background: linear-gradient(145deg, #1e3056 0%, #14203a 100%);
+  border-color: rgba(6, 182, 212, 0.4);
+  transform: translateY(-2px);
+  box-shadow: 0 12px 22px rgba(0,0,0,0.45);
 }
 
 .pin-btn:active {
-  transform: scale(0.96);
+  transform: translateY(2px) scale(0.96);
+  box-shadow: var(--clay-shadow-active);
+}
+
+/* ==========================================================================
+   Responsive Adaptations
+   ========================================================================== */
+@media (max-width: 768px) {
+  .auth-wrapper {
+    padding: 24px 16px;
+  }
+  .portal-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+  .portal-card {
+    min-height: auto;
+    padding: 32px 24px;
+  }
+  .auth-card {
+    padding: 32px 24px;
+  }
 }
