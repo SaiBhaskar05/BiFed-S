@@ -107,13 +107,13 @@
           <div class="clay-card stat-card">
             <div class="stat-card-header">
               <span>Total Enrolled Staff</span>
-              <div class="clay-icon-bubble" style="background: linear-gradient(135deg, rgba(59,130,246,0.2), rgba(37,99,235,0.3)); color: var(--primary);">
-                <i data-lucide="users" style="width: 22px;"></i>
+              <div class="clay-icon-bubble" style="background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%); color: #1d4ed8;">
+                <i data-lucide="users" style="width: 24px;"></i>
               </div>
             </div>
             <div class="stat-val" id="statTotalUsers">{{ stats.total_users }}</div>
             <div class="stat-footer-text">
-              <i data-lucide="database" style="width: 14px; color: var(--primary);"></i>
+              <i data-lucide="database" style="width: 15px; color: var(--primary);"></i>
               <span>Active embeddings in gallery</span>
             </div>
           </div>
@@ -122,13 +122,13 @@
           <div class="clay-card stat-card">
             <div class="stat-card-header">
               <span>Today's Present</span>
-              <div class="clay-icon-bubble" style="background: linear-gradient(135deg, rgba(16,185,129,0.2), rgba(5,150,105,0.3)); color: var(--success);">
-                <i data-lucide="user-check" style="width: 22px;"></i>
+              <div class="clay-icon-bubble" style="background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%); color: #047857;">
+                <i data-lucide="user-check" style="width: 24px;"></i>
               </div>
             </div>
-            <div class="stat-val" style="color: #34d399;" id="statTodayPresent">{{ stats.today_present }}</div>
+            <div class="stat-val" style="color: #059669;" id="statTodayPresent">{{ stats.today_present }}</div>
             <div class="stat-footer-text">
-              <i data-lucide="check-circle" style="width: 14px; color: var(--success);"></i>
+              <i data-lucide="check-circle" style="width: 15px; color: var(--success);"></i>
               <span>Verified via kiosk scanner</span>
             </div>
           </div>
@@ -137,13 +137,13 @@
           <div class="clay-card stat-card">
             <div class="stat-card-header">
               <span>Late Arrivals</span>
-              <div class="clay-icon-bubble" style="background: linear-gradient(135deg, rgba(245,158,11,0.2), rgba(217,119,6,0.3)); color: var(--warning);">
-                <i data-lucide="clock-alert" style="width: 22px;"></i>
+              <div class="clay-icon-bubble" style="background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%); color: #b45309;">
+                <i data-lucide="clock-alert" style="width: 24px;"></i>
               </div>
             </div>
-            <div class="stat-val" style="color: #fbbf24;" id="statTodayLate">{{ stats.today_late }}</div>
+            <div class="stat-val" style="color: #d97706;" id="statTodayLate">{{ stats.today_late }}</div>
             <div class="stat-footer-text">
-              <i data-lucide="alert-triangle" style="width: 14px; color: var(--warning);"></i>
+              <i data-lucide="alert-triangle" style="width: 15px; color: var(--warning);"></i>
               <span>Clocked in after {{ settings.get('late_cutoff_time', '09:30') }}</span>
             </div>
           </div>
@@ -152,13 +152,13 @@
           <div class="clay-card stat-card">
             <div class="stat-card-header">
               <span>Attendance Rate</span>
-              <div class="clay-icon-bubble" style="background: linear-gradient(135deg, rgba(6,182,212,0.2), rgba(2,132,199,0.3)); color: var(--cyan);">
-                <i data-lucide="trending-up" style="width: 22px;"></i>
+              <div class="clay-icon-bubble" style="background: linear-gradient(135deg, #cffafe 0%, #a5f3fc 100%); color: #0e7490;">
+                <i data-lucide="trending-up" style="width: 24px;"></i>
               </div>
             </div>
-            <div class="stat-val" style="color: var(--cyan);" id="statAttendanceRate">{{ stats.attendance_rate }}</div>
+            <div class="stat-val" style="color: #0284c7;" id="statAttendanceRate">{{ stats.attendance_rate }}</div>
             <div class="stat-footer-text">
-              <i data-lucide="bar-chart-2" style="width: 14px; color: var(--cyan);"></i>
+              <i data-lucide="bar-chart-2" style="width: 15px; color: var(--cyan);"></i>
               <span>Overall staff compliance today</span>
             </div>
           </div>
@@ -475,8 +475,8 @@
             <form id="settingsForm">
               <!-- Category 1: Recognition Engine -->
               <div style="margin-bottom: 28px;">
-                <h3 style="font-size: 1.05rem; font-weight: 700; color: #93c5fd; margin-bottom: 14px; display: flex; align-items: center; gap: 8px;">
-                  <i data-lucide="scan-face" style="width: 16px;"></i>
+                <h3 style="font-size: 1.05rem; font-weight: 800; color: #1d4ed8; margin-bottom: 14px; display: flex; align-items: center; gap: 8px;">
+                  <i data-lucide="scan-face" style="width: 18px;"></i>
                   <span>ArcFace Recognition Parameters</span>
                 </h3>
                 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 18px;">
@@ -495,8 +495,8 @@
 
               <!-- Category 2: Anti-Spoofing & Liveness -->
               <div style="margin-bottom: 28px;">
-                <h3 style="font-size: 1.05rem; font-weight: 700; color: #67e8f9; margin-bottom: 14px; display: flex; align-items: center; gap: 8px;">
-                  <i data-lucide="shield-alert" style="width: 16px;"></i>
+                <h3 style="font-size: 1.05rem; font-weight: 800; color: #0284c7; margin-bottom: 14px; display: flex; align-items: center; gap: 8px;">
+                  <i data-lucide="shield-alert" style="width: 18px;"></i>
                   <span>Presentation Attack Detection (PAD)</span>
                 </h3>
                 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 18px;">
@@ -515,8 +515,8 @@
 
               <!-- Category 3: Operational Schedules -->
               <div style="margin-bottom: 24px;">
-                <h3 style="font-size: 1.05rem; font-weight: 700; color: #fde047; margin-bottom: 14px; display: flex; align-items: center; gap: 8px;">
-                  <i data-lucide="clock" style="width: 16px;"></i>
+                <h3 style="font-size: 1.05rem; font-weight: 800; color: #b45309; margin-bottom: 14px; display: flex; align-items: center; gap: 8px;">
+                  <i data-lucide="clock" style="width: 18px;"></i>
                   <span>Attendance Schedule Rules</span>
                 </h3>
                 <div class="form-group">

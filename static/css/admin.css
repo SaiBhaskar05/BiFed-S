@@ -1,6 +1,6 @@
 /* ==========================================================================
-   Admin Dashboard & Management Console Styles — Claymorphic Edition
-   Optimized for Responsive Desktop, Tablet, and Mobile Formats
+   Admin Dashboard & Management Console — Light Claymorphic Edition
+   Airy White Surfaces • High-Contrast Dark Typography • Tactile 3D Cards
    ========================================================================== */
 
 .admin-layout {
@@ -11,23 +11,25 @@
 }
 
 /* ==========================================================================
-   Claymorphic Top Navbar
+   Top Navbar (Claymorphic Light)
    ========================================================================== */
 .admin-navbar {
-  min-height: 76px;
-  background: linear-gradient(180deg, rgba(14, 21, 38, 0.95) 0%, rgba(10, 15, 28, 0.92) 100%);
-  backdrop-filter: blur(24px);
-  -webkit-backdrop-filter: blur(24px);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), inset 0 1px 1px rgba(255, 255, 255, 0.1);
+  min-height: 80px;
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1.5px solid rgba(226, 232, 240, 0.8);
+  box-shadow: 
+    0 10px 28px rgba(168, 185, 215, 0.25),
+    inset 0 1px 1px #ffffff;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 12px 32px;
+  padding: 12px 36px;
   position: sticky;
   top: 0;
   z-index: 100;
-  gap: 16px;
+  gap: 18px;
   flex-wrap: wrap;
 }
 
@@ -38,8 +40,8 @@
 }
 
 .brand-icon {
-  width: 44px;
-  height: 44px;
+  width: 46px;
+  height: 46px;
   border-radius: var(--radius-sm);
   background: var(--primary-gradient);
   display: flex;
@@ -48,22 +50,23 @@
   color: #fff;
   font-size: 22px;
   box-shadow: 
-    0 8px 20px var(--primary-glow),
-    inset 1.5px 1.5px 2px rgba(255, 255, 255, 0.4),
-    inset -2px -2px 4px rgba(0, 0, 0, 0.35);
+    6px 12px 22px rgba(37, 99, 235, 0.35),
+    inset 2px 2px 3px rgba(255, 255, 255, 0.6),
+    inset -2px -2px 3px rgba(29, 78, 216, 0.4);
   flex-shrink: 0;
 }
 
 .brand-title {
-  font-size: 1.18rem;
+  font-size: 1.25rem;
   font-weight: 800;
-  letter-spacing: -0.3px;
+  letter-spacing: -0.4px;
+  color: var(--text-heading);
   display: flex;
   align-items: center;
   gap: 8px;
 }
 
-/* Nav Tabs with Clay Pill Pillows */
+/* Nav Tabs with Recessed Clay Pill Bed */
 .nav-tabs-wrapper {
   display: flex;
   align-items: center;
@@ -79,13 +82,13 @@
 .nav-tabs {
   display: flex;
   gap: 8px;
-  background: linear-gradient(145deg, #0b1120 0%, #10192e 100%);
+  background: #edf2f7;
   padding: 6px;
   border-radius: var(--radius-full);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  border: 1px solid #e2e8f0;
   box-shadow: 
-    inset 2px 2px 6px rgba(0, 0, 0, 0.45),
-    inset -1px -1px 2px rgba(255, 255, 255, 0.05);
+    inset 2px 2px 5px rgba(180, 195, 220, 0.4),
+    inset -2px -2px 4px rgba(255, 255, 255, 0.9);
   white-space: nowrap;
 }
 
@@ -95,7 +98,7 @@
   background: transparent;
   border: none;
   color: var(--text-muted);
-  font-weight: 600;
+  font-weight: 700;
   font-size: 0.88rem;
   cursor: pointer;
   display: flex;
@@ -106,24 +109,24 @@
 }
 
 .nav-tab-btn.active {
-  background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+  background: var(--primary-gradient);
   color: #ffffff;
   box-shadow: 
-    0 6px 16px rgba(37, 99, 235, 0.4),
-    inset 1px 1px 1.5px rgba(255, 255, 255, 0.4),
-    inset -1px -1px 2px rgba(0, 0, 0, 0.25);
+    4px 8px 18px rgba(37, 99, 235, 0.35),
+    inset 1.5px 1.5px 2px rgba(255, 255, 255, 0.5),
+    inset -1.5px -1.5px 2px rgba(29, 78, 216, 0.4);
 }
 
 .nav-tab-btn:hover:not(.active) {
   color: var(--text-main);
-  background: rgba(255, 255, 255, 0.06);
+  background: rgba(255, 255, 255, 0.6);
 }
 
 .nav-tab-btn:active {
   transform: scale(0.97);
 }
 
-/* User & Controls section */
+/* Controls section */
 .nav-controls {
   display: flex;
   align-items: center;
@@ -135,28 +138,28 @@
   display: flex;
   align-items: center;
   gap: 10px;
-  background: linear-gradient(145deg, #16223b 0%, #10192e 100%);
-  padding: 4px 14px 4px 6px;
+  background: #ffffff;
+  padding: 5px 16px 5px 6px;
   border-radius: var(--radius-full);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(226, 232, 240, 0.9);
   box-shadow: 
-    0 4px 10px rgba(0,0,0,0.3),
-    inset 1px 1px 1.5px rgba(255,255,255,0.15),
-    inset -1px -1px 2px rgba(0,0,0,0.3);
+    4px 8px 16px rgba(168, 185, 215, 0.25),
+    inset 1.5px 1.5px 2px #ffffff,
+    inset -1.5px -1.5px 2px rgba(200, 215, 235, 0.3);
 }
 
 .user-avatar-bubble {
-  width: 34px;
-  height: 34px;
+  width: 36px;
+  height: 36px;
   border-radius: 50%;
   background: var(--primary-gradient);
   display: flex;
   align-items: center;
   justify-content: center;
-  font-weight: 700;
-  font-size: 0.88rem;
+  font-weight: 800;
+  font-size: 0.9rem;
   color: #fff;
-  box-shadow: 0 2px 8px var(--primary-glow);
+  box-shadow: 0 4px 10px var(--primary-glow);
 }
 
 /* ==========================================================================
@@ -167,7 +170,7 @@
   max-width: 1440px;
   width: 100%;
   margin: 0 auto;
-  padding: 32px 28px;
+  padding: 34px 28px;
 }
 
 .tab-pane {
@@ -185,13 +188,14 @@
 }
 
 /* ==========================================================================
-   Overview Header Banner
+   Overview Header Hero Banner
    ========================================================================== */
 .overview-welcome-card {
-  padding: 28px 32px;
-  margin-bottom: 28px;
-  background: linear-gradient(135deg, rgba(22, 34, 59, 0.95) 0%, rgba(15, 23, 42, 0.95) 100%);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 30px 36px;
+  margin-bottom: 30px;
+  background: linear-gradient(135deg, #ffffff 0%, #f0f7ff 100%);
+  border: 1.5px solid rgba(255, 255, 255, 0.95);
+  box-shadow: var(--clay-shadow);
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -200,9 +204,10 @@
 }
 
 .welcome-info-title {
-  font-size: 1.45rem;
+  font-size: 1.55rem;
   font-weight: 800;
-  letter-spacing: -0.3px;
+  letter-spacing: -0.4px;
+  color: var(--text-heading);
   margin-bottom: 6px;
 }
 
@@ -210,21 +215,22 @@
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  padding: 5px 12px;
+  padding: 6px 14px;
   border-radius: var(--radius-full);
-  background: rgba(16, 185, 129, 0.15);
-  border: 1px solid rgba(16, 185, 129, 0.35);
-  color: #34d399;
+  background: #d1fae5;
+  border: 1px solid #a7f3d0;
+  color: #065f46;
   font-size: 0.78rem;
-  font-weight: 700;
+  font-weight: 800;
   letter-spacing: 0.5px;
+  box-shadow: 2px 4px 10px rgba(167, 243, 208, 0.4);
 }
 
 .pulse-dot-green {
   width: 8px;
   height: 8px;
   border-radius: 50%;
-  background: #10b981;
+  background: #059669;
   box-shadow: 0 0 10px #10b981;
   animation: pulseGreen 1.8s infinite;
 }
@@ -235,25 +241,27 @@
 }
 
 /* ==========================================================================
-   Claymorphic Stats Grid
+   4 Claymorphic Key Metric Cards (Light 3D Puffy)
    ========================================================================== */
 .stats-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 22px;
-  margin-bottom: 30px;
+  gap: 24px;
+  margin-bottom: 32px;
 }
 
 .stat-card {
-  padding: 24px;
+  padding: 26px;
   position: relative;
   overflow: hidden;
-  background: linear-gradient(145deg, #17243e 0%, #111a2f 100%);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: #ffffff;
+  border: 1.5px solid rgba(255, 255, 255, 0.95);
+  box-shadow: var(--clay-shadow);
 }
 
 .stat-card:hover {
   transform: translateY(-4px);
+  box-shadow: var(--clay-shadow-hover);
 }
 
 .stat-card-header {
@@ -262,21 +270,23 @@
   justify-content: space-between;
   color: var(--text-muted);
   font-size: 0.88rem;
-  font-weight: 600;
-  margin-bottom: 16px;
+  font-weight: 700;
+  margin-bottom: 14px;
 }
 
 .stat-val {
-  font-size: 2.45rem;
+  font-size: 2.6rem;
   font-weight: 800;
-  letter-spacing: -1px;
+  letter-spacing: -1.2px;
   line-height: 1;
-  margin-bottom: 10px;
+  color: var(--text-heading);
+  margin-bottom: 12px;
 }
 
 .stat-footer-text {
   color: var(--text-dim);
-  font-size: 0.82rem;
+  font-size: 0.84rem;
+  font-weight: 600;
   display: flex;
   align-items: center;
   gap: 6px;
@@ -287,32 +297,36 @@
    ========================================================================== */
 .overview-dashboard-grid {
   display: grid;
-  grid-template-columns: 1.6fr 1fr;
-  gap: 26px;
+  grid-template-columns: 1.65fr 1fr;
+  gap: 28px;
   margin-bottom: 32px;
 }
 
-/* Mini Feeds & Widgets */
+/* Telemetry & Quick Action Cards */
 .telemetry-card {
-  padding: 24px;
+  padding: 26px;
   display: flex;
   flex-direction: column;
   gap: 18px;
-  background: linear-gradient(145deg, #16233d 0%, #111a2f 100%);
+  background: #ffffff;
+  border: 1.5px solid rgba(255, 255, 255, 0.95);
+  box-shadow: var(--clay-shadow);
 }
 
 .telemetry-item {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 12px 16px;
-  background: rgba(0, 0, 0, 0.25);
+  padding: 13px 18px;
+  background: #f8fafc;
   border-radius: var(--radius-sm);
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  border: 1px solid #e2e8f0;
+  box-shadow: inset 1px 1px 2px rgba(255, 255, 255, 0.8);
 }
 
 .telemetry-label {
-  font-size: 0.86rem;
+  font-size: 0.88rem;
+  font-weight: 700;
   color: var(--text-muted);
   display: flex;
   align-items: center;
@@ -321,15 +335,15 @@
 
 .telemetry-value {
   font-family: var(--font-mono);
-  font-weight: 600;
+  font-weight: 700;
   font-size: 0.88rem;
-  color: var(--text-main);
+  color: var(--text-heading);
 }
 
 .quick-actions-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 12px;
+  gap: 14px;
 }
 
 .quick-action-btn {
@@ -337,50 +351,51 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 18px 12px;
+  padding: 20px 14px;
   gap: 10px;
   text-align: center;
   border-radius: var(--radius-md);
-  font-size: 0.84rem;
+  font-size: 0.86rem;
   font-weight: 700;
   text-decoration: none;
   cursor: pointer;
-  background: linear-gradient(145deg, #182643 0%, #111a30 100%);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  box-shadow: 
-    0 8px 18px rgba(0,0,0,0.35),
-    inset 1px 1px 2px rgba(255,255,255,0.15),
-    inset -1px -1px 2px rgba(0,0,0,0.35);
-  color: var(--text-main);
+  background: #ffffff;
+  border: 1px solid rgba(226, 232, 240, 0.8);
+  box-shadow: var(--clay-btn-shadow);
+  color: var(--text-heading);
   transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .quick-action-btn:hover {
   transform: translateY(-3px);
-  border-color: rgba(255, 255, 255, 0.2);
-  box-shadow: 0 12px 24px rgba(0,0,0,0.45);
+  background: #f8fafc;
+  box-shadow: 8px 16px 28px rgba(168, 185, 215, 0.35);
 }
 
 .quick-action-btn:active {
   transform: translateY(1px);
+  box-shadow: var(--clay-shadow-active);
 }
 
 /* ==========================================================================
-   Tables & Data Cards
+   Clean Light Tables & Data Cards
    ========================================================================== */
 .data-table-card {
   overflow: hidden;
-  background: linear-gradient(145deg, #152037 0%, #0f172a 100%);
+  background: #ffffff;
+  border: 1.5px solid rgba(255, 255, 255, 0.95);
+  box-shadow: var(--clay-shadow);
 }
 
 .table-header-bar {
-  padding: 22px 28px;
+  padding: 24px 28px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  border-bottom: 1.5px solid #edf2f7;
   flex-wrap: wrap;
   gap: 16px;
+  background: #ffffff;
 }
 
 .table-responsive {
@@ -398,27 +413,28 @@ table.admin-table {
 
 table.admin-table th {
   padding: 16px 24px;
-  background: rgba(10, 15, 28, 0.75);
+  background: #f8fafc;
   color: var(--text-dim);
   font-weight: 700;
   font-size: 0.78rem;
   text-transform: uppercase;
   letter-spacing: 0.6px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  border-bottom: 1.5px solid #e2e8f0;
 }
 
 table.admin-table td {
   padding: 16px 24px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  border-bottom: 1px solid #f1f5f9;
   vertical-align: middle;
+  color: var(--text-main);
 }
 
 table.admin-table tbody tr {
-  transition: background-color 0.2s ease;
+  transition: background-color 0.15s ease;
 }
 
 table.admin-table tbody tr:hover {
-  background: rgba(255, 255, 255, 0.03);
+  background: #f8fafc;
 }
 
 .user-avatar-cell {
@@ -432,9 +448,9 @@ table.admin-table tbody tr:hover {
   height: 44px;
   border-radius: var(--radius-sm);
   object-fit: cover;
-  background: rgba(255, 255, 255, 0.06);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+  background: #e2e8f0;
+  border: 2px solid #ffffff;
+  box-shadow: 0 4px 10px rgba(168, 185, 215, 0.35);
 }
 
 /* ==========================================================================
@@ -455,9 +471,9 @@ table.admin-table tbody tr:hover {
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 2px solid rgba(59, 130, 246, 0.35);
+  border: 3px solid #ffffff;
   box-shadow: 
-    0 12px 28px rgba(0, 0, 0, 0.6),
+    0 16px 36px rgba(168, 185, 215, 0.4),
     inset 0 0 40px rgba(0, 0, 0, 0.8);
 }
 
@@ -489,40 +505,40 @@ table.admin-table tbody tr:hover {
 }
 
 .hud-status-badge {
-  background: rgba(14, 21, 38, 0.9);
+  background: rgba(255, 255, 255, 0.95);
   backdrop-filter: blur(10px);
-  padding: 6px 14px;
+  padding: 6px 16px;
   border-radius: var(--radius-full);
-  font-size: 0.8rem;
+  font-size: 0.82rem;
   font-weight: 700;
+  color: var(--text-heading);
   display: flex;
   align-items: center;
   gap: 8px;
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  box-shadow: var(--clay-shadow);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.2);
 }
 
 .sample-progress-bar {
-  height: 10px;
-  background: rgba(0, 0, 0, 0.35);
+  height: 12px;
+  background: #edf2f7;
   border-radius: var(--radius-full);
   overflow: hidden;
   margin-top: 10px;
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  box-shadow: inset 1px 1px 3px rgba(0,0,0,0.5);
+  border: 1px solid #e2e8f0;
+  box-shadow: inset 1px 1px 3px rgba(180, 195, 220, 0.4);
 }
 
 .sample-progress-fill {
   height: 100%;
-  background: var(--accent-gradient);
+  background: var(--primary-gradient);
   width: 0%;
   border-radius: var(--radius-full);
   transition: width 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-  box-shadow: 0 0 12px var(--cyan-glow);
+  box-shadow: 0 0 10px rgba(37, 99, 235, 0.5);
 }
 
 /* ==========================================================================
-   Responsive Breakpoints: Desktop, Tablet, Mobile
+   Responsive Adaptations: Desktop, Tablet, Mobile
    ========================================================================== */
 @media (max-width: 1200px) {
   .stats-grid {
@@ -538,7 +554,7 @@ table.admin-table tbody tr:hover {
     padding: 12px 20px;
   }
   .admin-container {
-    padding: 20px 16px;
+    padding: 22px 18px;
   }
   .enrollment-studio {
     grid-template-columns: 1fr;
@@ -550,7 +566,7 @@ table.admin-table tbody tr:hover {
     flex-direction: column;
     align-items: stretch;
     min-height: auto;
-    padding: 12px 16px;
+    padding: 14px 16px;
     gap: 12px;
   }
   .brand-section {
@@ -575,10 +591,10 @@ table.admin-table tbody tr:hover {
   }
   .stats-grid {
     grid-template-columns: 1fr;
-    gap: 16px;
+    gap: 18px;
   }
   .stat-val {
-    font-size: 2.1rem;
+    font-size: 2.2rem;
   }
   .quick-actions-grid {
     grid-template-columns: 1fr 1fr;
@@ -588,7 +604,7 @@ table.admin-table tbody tr:hover {
     align-items: stretch;
   }
   .overview-welcome-card {
-    padding: 20px;
+    padding: 22px;
   }
 }
 

@@ -402,7 +402,7 @@ function renderAttendanceTable(logs) {
         </span>
       </td>
       <td>
-        <span style="font-size: 0.85rem; color: #34d399; font-weight: 600;">${(log.similarity_score * 100).toFixed(1)}% Match</span>
+        <span style="font-size: 0.85rem; color: #059669; font-weight: 700;">${(log.similarity_score * 100).toFixed(1)}% Match</span>
         <div style="font-size: 0.75rem; color: var(--text-dim);">PAD Score: ${(log.anti_spoof_score * 100).toFixed(0)}%</div>
       </td>
       <td>
@@ -460,7 +460,7 @@ async function loadRecentOverviewLogs() {
           </span>
         </td>
         <td>
-          <span style="font-size: 0.82rem; color: #34d399; font-weight: 600;">${(log.similarity_score * 100).toFixed(0)}%</span>
+          <span style="font-size: 0.82rem; color: #059669; font-weight: 700;">${(log.similarity_score * 100).toFixed(0)}%</span>
           <span style="font-size: 0.72rem; color: var(--text-dim); margin-left: 4px;">(PAD ${(log.anti_spoof_score * 100).toFixed(0)}%)</span>
         </td>
       </tr>
