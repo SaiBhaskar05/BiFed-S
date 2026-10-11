@@ -224,14 +224,14 @@ async function loadTodayAttendanceFeed() {
 
     container.innerHTML = data.logs.map(log => `
       <div class="kiosk-feed-item">
-        <img src="${log.avatar_path || 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=80'}" style="width:36px; height:36px; border-radius:50%; object-fit:cover; border:1px solid var(--border);">
+        <img src="${log.avatar_path || 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=80'}" style="width:38px; height:38px; border-radius:50%; object-fit:cover; border:1.5px solid var(--border);">
         <div style="flex:1; overflow:hidden;">
-          <div style="font-weight:700; font-size:0.88rem; white-space:nowrap; text-overflow:ellipsis; overflow:hidden;">${log.user_name}</div>
-          <div style="font-size:0.75rem; color:var(--text-muted);">${log.department}</div>
+          <div style="font-weight:800; font-size:0.88rem; color: var(--text-heading); white-space:nowrap; text-overflow:ellipsis; overflow:hidden;">${log.user_name}</div>
+          <div style="font-size:0.75rem; color:var(--text-muted); font-weight:500;">${log.department}</div>
         </div>
         <div style="text-align:right;">
-          <div style="font-family:var(--font-mono); font-size:0.82rem; font-weight:600; color:var(--cyan);">${log.time_str}</div>
-          <span class="badge ${log.status === 'Present' ? 'badge-present' : 'badge-late'}" style="font-size:0.68rem; padding: 2px 6px;">${log.status}</span>
+          <div style="font-family:var(--font-mono); font-size:0.82rem; font-weight:700; color:var(--primary);">${log.time_str}</div>
+          <span class="badge ${log.status === 'Present' ? 'badge-present' : 'badge-late'}" style="font-size:0.68rem; padding: 2px 7px;">${log.status}</span>
         </div>
       </div>
     `).join("");
@@ -251,14 +251,14 @@ function addLogToLiveFeed(log) {
   const item = document.createElement("div");
   item.className = "kiosk-feed-item";
   item.innerHTML = `
-    <img src="${log.avatar || 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=80'}" style="width:36px; height:36px; border-radius:50%; object-fit:cover; border:1px solid var(--border);">
+    <img src="${log.avatar || 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=80'}" style="width:38px; height:38px; border-radius:50%; object-fit:cover; border:1.5px solid var(--border);">
     <div style="flex:1; overflow:hidden;">
-      <div style="font-weight:700; font-size:0.88rem; white-space:nowrap; text-overflow:ellipsis; overflow:hidden;">${log.name}</div>
-      <div style="font-size:0.75rem; color:var(--text-muted);">${log.department}</div>
+      <div style="font-weight:800; font-size:0.88rem; color: var(--text-heading); white-space:nowrap; text-overflow:ellipsis; overflow:hidden;">${log.name}</div>
+      <div style="font-size:0.75rem; color:var(--text-muted); font-weight:500;">${log.department}</div>
     </div>
     <div style="text-align:right;">
-      <div style="font-family:var(--font-mono); font-size:0.82rem; font-weight:600; color:var(--cyan);">${log.time}</div>
-      <span class="badge ${log.status === 'Present' ? 'badge-present' : 'badge-late'}" style="font-size:0.68rem; padding: 2px 6px;">${log.status}</span>
+      <div style="font-family:var(--font-mono); font-size:0.82rem; font-weight:700; color:var(--primary);">${log.time}</div>
+      <span class="badge ${log.status === 'Present' ? 'badge-present' : 'badge-late'}" style="font-size:0.68rem; padding: 2px 7px;">${log.status}</span>
     </div>
   `;
   container.prepend(item);

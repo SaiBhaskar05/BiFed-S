@@ -15,12 +15,14 @@
   <!-- Kiosk Top Header Bar -->
   <header class="kiosk-header">
     <div style="display: flex; align-items: center; gap: 16px;">
-      <div style="width: 36px; height: 36px; border-radius: 8px; background: linear-gradient(135deg, #06b6d4, #3b82f6); display: flex; align-items: center; justify-content: center; color: #fff; box-shadow: 0 0 14px var(--cyan-glow);">
-        <i data-lucide="scan-face" style="width: 20px;"></i>
+      <div style="width: 42px; height: 42px; border-radius: var(--radius-sm); background: var(--primary-gradient); display: flex; align-items: center; justify-content: center; color: #fff; box-shadow: var(--clay-btn-primary-shadow);">
+        <i data-lucide="scan-face" style="width: 22px; height: 22px;"></i>
       </div>
       <div>
-        <div style="font-weight: 800; font-size: 1.1rem; letter-spacing: -0.3px;">{{ kiosk.name }}</div>
-        <div style="font-size: 0.75rem; color: var(--text-dim);"><i data-lucide="map-pin" style="width: 12px; display: inline;"></i> {{ kiosk.location }}</div>
+        <div style="font-weight: 800; font-size: 1.15rem; letter-spacing: -0.3px; color: var(--text-heading);">{{ kiosk.name }}</div>
+        <div style="font-size: 0.78rem; color: var(--text-dim); display: flex; align-items: center; gap: 4px;">
+          <i data-lucide="map-pin" style="width: 13px; height: 13px; display: inline;"></i> {{ kiosk.location }}
+        </div>
       </div>
       <div class="kiosk-badge">
         <span class="pulse-dot"></span>
@@ -31,15 +33,15 @@
     <!-- Live Digital Clock & Controls -->
     <div style="display: flex; align-items: center; gap: 20px;">
       <div style="text-align: right;">
-        <div id="kioskClock" style="font-family: var(--font-mono); font-size: 1.25rem; font-weight: 700; color: #38bdf8;">--:--:--</div>
-        <div id="kioskDate" style="font-size: 0.75rem; color: var(--text-muted);">--</div>
+        <div id="kioskClock" style="font-family: var(--font-mono); font-size: 1.35rem; font-weight: 800; color: var(--text-heading); letter-spacing: -0.5px;">--:--:--</div>
+        <div id="kioskDate" style="font-size: 0.78rem; color: var(--text-dim); font-weight: 600;">--</div>
       </div>
 
-      <div style="display: flex; gap: 8px;">
-        <button class="btn btn-secondary" onclick="toggleFullscreen()" title="Toggle Fullscreen" style="padding: 8px 12px;">
+      <div style="display: flex; gap: 10px;">
+        <button class="btn btn-secondary" onclick="toggleFullscreen()" title="Toggle Fullscreen" style="padding: 10px 14px;">
           <i data-lucide="maximize" style="width: 16px;"></i>
         </button>
-        <a href="/kiosk/logout" class="btn btn-secondary" style="padding: 8px 12px; color: var(--danger);" title="Exit Kiosk Mode">
+        <a href="/kiosk/logout" class="btn btn-secondary" style="padding: 10px 14px; color: var(--danger);" title="Exit Kiosk Mode">
           <i data-lucide="power" style="width: 16px;"></i>
         </a>
       </div>
@@ -62,37 +64,37 @@
       <!-- Center Targeting Oval -->
       <div id="centerTarget" class="hud-center-target"></div>
 
-      <!-- Live Voice & Instruction Banner -->
+      <!-- Live Voice & Instruction Banner (Tactile White Clay Pill) -->
       <div class="hud-instruction-banner">
         <span class="pulse-dot"></span>
         <span id="instructionText">Please Look at the Camera</span>
       </div>
 
-      <!-- Biometric Verification Result Modal (Animated Overlay) -->
+      <!-- Biometric Verification Result Modal (Tactile White Clay Card) -->
       <div id="matchResultCard" class="match-result-card">
         <img id="matchAvatar" src="" class="match-avatar" alt="User Profile">
-        <h2 id="matchName" style="font-size: 1.5rem; font-weight: 800; margin-bottom: 4px;">--</h2>
-        <div id="matchEmpId" style="font-family: var(--font-mono); font-size: 0.9rem; color: var(--text-muted); margin-bottom: 8px;">--</div>
-        <div id="matchDept" style="font-size: 0.88rem; color: #93c5fd; margin-bottom: 16px;">--</div>
+        <h2 id="matchName" style="font-size: 1.55rem; font-weight: 800; color: var(--text-heading); margin-bottom: 4px;">--</h2>
+        <div id="matchEmpId" style="font-family: var(--font-mono); font-size: 0.9rem; color: var(--text-dim); margin-bottom: 8px; font-weight: 600;">--</div>
+        <div id="matchDept" style="font-size: 0.9rem; color: var(--primary); font-weight: 700; margin-bottom: 16px;">--</div>
         
         <div style="display: flex; justify-content: center; gap: 10px; margin-bottom: 14px;">
           <span id="matchStatusBadge" class="badge badge-present">PRESENT</span>
         </div>
         
-        <div id="matchScoreText" style="font-size: 0.78rem; color: var(--text-dim); font-family: var(--font-mono);">
+        <div id="matchScoreText" style="font-size: 0.8rem; color: var(--text-muted); font-family: var(--font-mono); font-weight: 600;">
           Match: 95% • PAD: 98%
         </div>
       </div>
     </div>
 
     <!-- Right Sidebar: Today's Live Attendance Feed -->
-    <aside class="clay-card kiosk-sidebar">
+    <aside class="kiosk-sidebar">
       <div class="kiosk-feed-header">
         <div>
-          <div style="font-weight: 700; font-size: 1rem;">Today's Check-ins</div>
-          <div style="font-size: 0.75rem; color: var(--text-muted);">Real-time biometric attendance stream</div>
+          <div style="font-weight: 800; font-size: 1.05rem; color: var(--text-heading); letter-spacing: -0.3px;">Today's Check-ins</div>
+          <div style="font-size: 0.75rem; color: var(--text-dim); font-weight: 500;">Real-time biometric attendance stream</div>
         </div>
-        <span id="todayAttendeeCount" class="badge badge-present">0</span>
+        <span id="todayAttendeeCount" class="badge badge-present" style="font-size: 0.82rem; padding: 4px 10px;">0</span>
       </div>
 
       <div id="kioskFeedList" class="kiosk-feed-list">
