@@ -7,7 +7,6 @@
 ![FastAPI](https://img.shields.io/badge/FastAPI-0.100+-009688?logo=fastapi&logoColor=white)
 ![PyTorch](https://img.shields.io/badge/PyTorch-2.0+-EE4C2C?logo=pytorch&logoColor=white)
 ![Federated Learning](https://img.shields.io/badge/Module-BiFed--S%20Multimodal%20FL-orange)
-![License](https://img.shields.io/badge/License-MIT-green)
 
 ---
 
