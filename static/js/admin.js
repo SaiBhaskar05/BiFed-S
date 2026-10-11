@@ -302,7 +302,7 @@ function renderUsersTable(users) {
     <tr>
       <td>
         <div class="user-avatar-cell">
-          <img src="${u.avatar_path || 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=100'}" class="avatar-img" alt="Avatar">
+          <img src="${u.avatar_path || 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=100'}" class="avatar-img" alt="Avatar" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=100';">
           <div>
             <div style="font-weight: 700; color: var(--text-main);">${u.name}</div>
             <div style="font-size: 0.8rem; color: var(--text-muted);">${u.email || 'No email registered'}</div>
@@ -518,6 +518,8 @@ document.addEventListener("DOMContentLoaded", () => {
   lucide.createIcons();
   refreshStats();
   loadRecentOverviewLogs();
+  loadUsersList();
+  loadAttendanceLogs();
 
   const enrollForm = document.getElementById("enrollUserForm");
   if (enrollForm) enrollForm.addEventListener("submit", handleEnrollSubmit);

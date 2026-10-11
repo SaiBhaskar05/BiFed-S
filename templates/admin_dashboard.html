@@ -405,7 +405,32 @@
                 </tr>
               </thead>
               <tbody id="usersTableBody">
-                <!-- Dynamically populated via admin.js -->
+                {% if users %}
+                  {% for u in users %}
+                  <tr>
+                    <td>
+                      <div class="user-avatar-cell">
+                        <img src="{{ u.avatar_path or 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=100' }}" class="avatar-img" alt="Avatar" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=100';">
+                        <div>
+                          <div style="font-weight: 700; color: var(--text-main);">{{ u.name }}</div>
+                          <div style="font-size: 0.8rem; color: var(--text-dim);">{{ u.email or 'No email registered' }}</div>
+                        </div>
+                      </div>
+                    </td>
+                    <td><span style="font-family: var(--font-mono); color: var(--primary); font-weight:700;">{{ u.employee_id }}</span></td>
+                    <td>{{ u.department }}</td>
+                    <td><span class="badge badge-active">{{ u.sample_count }} Embeddings</span></td>
+                    <td style="color: var(--text-dim); font-size: 0.85rem;">{{ u.created_at or 'Recently' }}</td>
+                    <td>
+                      <button class="btn btn-secondary" style="padding: 6px 12px; color: var(--danger);" onclick="deleteUserPrompt('{{ u.employee_id }}', '{{ u.name }}')" title="Delete Profile">
+                        <i data-lucide="trash-2" style="width: 14px;"></i>
+                      </button>
+                    </td>
+                  </tr>
+                  {% endfor %}
+                {% else %}
+                  <tr><td colspan="6" style="text-align:center; padding: 32px; color: var(--text-dim);">No staff registered yet. Use the Register Staff tab to enroll.</td></tr>
+                {% endif %}
               </tbody>
             </table>
           </div>
