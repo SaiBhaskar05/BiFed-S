@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Management Console | Biometric AI</title>
+  <link rel="stylesheet" href="/static/css/main.css">
+  <link rel="stylesheet" href="/static/css/admin.css">
+  <script src="/static/js/sounds.js"></script>
+  <script src="/static/js/admin.js"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+  <div class="admin-layout">
+    <!-- Top Navbar -->
+    <nav class="admin-navbar">
+      <div class="brand-section">
+        <div class="brand-icon">
+          <i data-lucide="shield-check"></i>
+        </div>
+        <div>
+          <div class="brand-title">Admin Management Portal</div>
+          <div style="font-size: 0.75rem; color: var(--text-muted);">Biometric AI Identity & Security Engine</div>
+        </div>
+      </div>
+
+      <!-- Navigation Tabs -->
+      <div class="nav-tabs">
+        <button class="nav-tab-btn active" data-tab="tab-overview" onclick="switchTab('tab-overview')">
+          <i data-lucide="layout-dashboard" style="width: 16px;"></i>
+          <span>Overview</span>
+        </button>
+        <button class="nav-tab-btn" data-tab="tab-enroll" onclick="switchTab('tab-enroll')">
+          <i data-lucide="user-plus" style="width: 16px;"></i>
+          <span>Register Staff</span>
+        </button>
+        <button class="nav-tab-btn" data-tab="tab-users" onclick="switchTab('tab-users')">
+          <i data-lucide="users" style="width: 16px;"></i>
+          <span>Enrolled Directory</span>
+        </button>
+        <button class="nav-tab-btn" data-tab="tab-attendance" onclick="switchTab('tab-attendance')">
+          <i data-lucide="clipboard-list" style="width: 16px;"></i>
+          <span>Attendance Records</span>
+        </button>
+        <button class="nav-tab-btn" data-tab="tab-settings" onclick="switchTab('tab-settings')">
+          <i data-lucide="sliders" style="width: 16px;"></i>
+          <span>System Settings</span>
+        </button>
+      </div>
+
+      <!-- Admin Profile & Kiosk Quick Launch -->
+      <div style="display: flex; align-items: center; gap: 14px;">
+        <a href="/kiosk/scanner" target="_blank" class="btn btn-secondary" style="font-size: 0.85rem; padding: 7px 14px; border-color: rgba(6, 182, 212, 0.4); color: var(--cyan);">
+          <i data-lucide="external-link" style="width: 15px;"></i>
+          <span>Open Kiosk</span>
+        </a>
+        <div style="height: 24px; width: 1px; background: var(--border);"></div>
+        <div style="display: flex; align-items: center; gap: 8px;">
+          <div style="width: 34px; height: 34px; border-radius: 50%; background: var(--primary); display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.85rem;">
+            {{ admin.username[0]|upper }}
+          </div>
+          <div style="line-height: 1.2;">
+            <div style="font-size: 0.85rem; font-weight: 600;">{{ admin.name }}</div>
+            <div style="font-size: 0.72rem; color: var(--text-dim);">Administrator</div>
+          </div>
+        </div>
+        <a href="/admin/logout" class="btn btn-secondary" style="padding: 7px 12px; color: var(--danger);" title="Sign Out">
+          <i data-lucide="log-out" style="width: 16px;"></i>
+        </a>
+      </div>
+    </nav>
+
+    <!-- Main Container Content -->
+    <main class="admin-container">
+      
+      <!-- ==================== TAB 1: OVERVIEW ==================== -->
+      <section id="tab-overview" class="tab-pane active">
+        <div class="stats-grid">
+          <div class="glass-panel stat-card">
+            <div class="stat-card-header">
+              <span>Total Registered Staff</span>
+              <div class="stat-icon-glow" style="background: rgba(59, 130, 246, 0.15); color: var(--primary);">
+                <i data-lucide="users"></i>
+              </div>
+            </div>
+            <div class="stat-val" id="statTotalUsers">{{ stats.total_users }}</div>
+            <div style="color: var(--text-muted); font-size: 0.82rem; margin-top: 6px;">Biometric embeddings stored</div>
+          </div>
+
+          <div class="glass-panel stat-card">
+            <div class="stat-card-header">
+              <span>Today's Present</span>
+              <div class="stat-icon-glow" style="background: rgba(16, 185, 129, 0.15); color: var(--success);">
+                <i data-lucide="user-check"></i>
+              </div>
+            </div>
+            <div class="stat-val" style="color: #34d399;" id="statTodayPresent">{{ stats.today_present }}</div>
+            <div style="color: var(--text-muted); font-size: 0.82rem; margin-top: 6px;">Verified via continuous kiosk</div>
+          </div>
+
+          <div class="glass-panel stat-card">
+            <div class="stat-card-header">
+              <span>Late Arrivals</span>
+              <div class="stat-icon-glow" style="background: rgba(245, 158, 11, 0.15); color: var(--warning);">
+                <i data-lucide="clock-alert"></i>
+              </div>
+            </div>
+            <div class="stat-val" style="color: #fbbf24;" id="statTodayLate">{{ stats.today_late }}</div>
+            <div style="color: var(--text-muted); font-size: 0.82rem; margin-top: 6px;">Clocked in after cutoff</div>
+          </div>
+
+          <div class="glass-panel stat-card">
+            <div class="stat-card-header">
+              <span>Attendance Rate</span>
+              <div class="stat-icon-glow" style="background: rgba(6, 182, 212, 0.15); color: var(--cyan);">
+                <i data-lucide="trending-up"></i>
+              </div>
+            </div>
+            <div class="stat-val" style="color: var(--cyan);" id="statAttendanceRate">{{ stats.attendance_rate }}</div>
+            <div style="color: var(--text-muted); font-size: 0.82rem; margin-top: 6px;">Overall staff compliance</div>
+          </div>
+        </div>
+
+        <!-- Quick Action Banner -->
+        <div class="glass-panel" style="padding: 28px; display: flex; align-items: center; justify-content: space-between; margin-bottom: 32px; background: linear-gradient(135deg, rgba(20,29,51,0.9), rgba(15,23,42,0.9)); border: 1px solid var(--border-active);">
+          <div>
+            <h2 style="font-size: 1.35rem; font-weight: 700; margin-bottom: 6px;">Ready to Enroll New Users?</h2>
+            <p style="color: var(--text-muted); font-size: 0.9rem;">
+              Capture live 512-d ArcFace embeddings with real-time MiniFASNet anti-spoofing quality gating.
+            </p>
+          </div>
+          <button class="btn btn-primary" onclick="switchTab('tab-enroll')">
+            <i data-lucide="user-plus" style="width: 18px;"></i>
+            <span>Launch Registration Studio</span>
+          </button>
+        </div>
+      </section>
+
+      <!-- ==================== TAB 2: BIOMETRIC ENROLLMENT STUDIO ==================== -->
+      <section id="tab-enroll" class="tab-pane">
+        <div class="enrollment-studio">
+          <!-- Camera Preview Panel -->
+          <div class="glass-panel" style="padding: 24px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+              <h2 style="font-size: 1.15rem; font-weight: 700;">Biometric Capture Stream</h2>
+              <button class="btn btn-secondary" style="padding: 6px 12px; font-size: 0.8rem;" onclick="resetEnrollmentSession()">
+                <i data-lucide="rotate-ccw" style="width: 14px;"></i> Reset
+              </button>
+            </div>
+
+            <div class="camera-feed-box">
+              <video id="enrollVideo" autoplay playsinline muted></video>
+              <canvas id="enrollCanvas"></canvas>
+
+              <div class="camera-overlay-hud">
+                <div id="enrollQualityBadge" class="hud-status-badge">Initializing...</div>
+                <div style="background: rgba(0,0,0,0.6); padding: 4px 10px; border-radius: 9999px; font-size: 0.75rem; font-family: var(--font-mono);">
+                  640x640 SCRFD
+                </div>
+              </div>
+            </div>
+
+            <!-- Capture Progress -->
+            <div style="margin-top: 16px;">
+              <div style="display: flex; justify-content: space-between; font-size: 0.85rem; font-weight: 600;">
+                <span id="enrollStatusText" style="color: #93c5fd;">Position face in center</span>
+                <span id="enrollSampleCountText" style="color: var(--text-muted);">0 / 5 samples</span>
+              </div>
+              <div class="sample-progress-bar">
+                <div id="enrollProgressFill" class="sample-progress-fill"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- User Details Form -->
+          <div class="glass-panel" style="padding: 28px;">
+            <h2 style="font-size: 1.25rem; font-weight: 700; margin-bottom: 6px;">Staff Registration Details</h2>
+            <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 22px;">
+              Face embeddings will be automatically extracted, normalized, and linked to this profile.
+            </p>
+
+            <form id="enrollUserForm">
+              <div class="form-group">
+                <label class="form-label" for="enrollEmpId">Employee / Student ID *</label>
+                <input type="text" id="enrollEmpId" class="form-control" placeholder="EMP-1001" required>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="enrollName">Full Name *</label>
+                <input type="text" id="enrollName" class="form-control" placeholder="Jane Doe" required>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="enrollDept">Department / Class *</label>
+                <input type="text" id="enrollDept" class="form-control" placeholder="Engineering / AI Lab" required>
+              </div>
+
+              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px;">
+                <div class="form-group">
+                  <label class="form-label" for="enrollEmail">Email Address</label>
+                  <input type="email" id="enrollEmail" class="form-control" placeholder="jane@company.com">
+                </div>
+                <div class="form-group">
+                  <label class="form-label" for="enrollPhone">Phone Number</label>
+                  <input type="tel" id="enrollPhone" class="form-control" placeholder="+1 (555) 000-0000">
+                </div>
+              </div>
+
+              <button type="submit" id="enrollSubmitBtn" class="btn btn-primary" style="width: 100%; height: 48px; margin-top: 14px;">
+                <span>Complete Biometric Registration</span>
+                <i data-lucide="check" style="width: 18px;"></i>
+              </button>
+            </form>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==================== TAB 3: ENROLLED DIRECTORY ==================== -->
+      <section id="tab-users" class="tab-pane">
+        <div class="glass-panel data-table-card">
+          <div class="table-header-bar">
+            <div>
+              <h2 style="font-size: 1.2rem; font-weight: 700;">Enrolled Staff Database</h2>
+              <div style="font-size: 0.82rem; color: var(--text-muted);">Successfully enrolled users with stored biometric vectors</div>
+            </div>
+            <button class="btn btn-primary" style="font-size: 0.85rem;" onclick="switchTab('tab-enroll')">
+              <i data-lucide="user-plus" style="width: 16px;"></i>
+              <span>Add New Staff</span>
+            </button>
+          </div>
+
+          <div class="table-responsive">
+            <table class="admin-table">
+              <thead>
+                <tr>
+                  <th>Staff Member</th>
+                  <th>Employee ID</th>
+                  <th>Department</th>
+                  <th>Biometric Samples</th>
+                  <th>Registered Date</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody id="usersTableBody">
+                <!-- Dynamically populated via admin.js -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==================== TAB 4: ATTENDANCE RECORDS ==================== -->
+      <section id="tab-attendance" class="tab-pane">
+        <div class="glass-panel data-table-card">
+          <div class="table-header-bar">
+            <div>
+              <h2 style="font-size: 1.2rem; font-weight: 700;">Live Attendance & Audit Records</h2>
+              <div style="font-size: 0.82rem; color: var(--text-muted);">Timestamped verifications recorded by the continuous kiosk scanner</div>
+            </div>
+            <div style="display: flex; gap: 10px;">
+              <a href="/api/admin/export-attendance" class="btn btn-secondary" style="font-size: 0.85rem;">
+                <i data-lucide="download" style="width: 16px;"></i>
+                <span>Export CSV</span>
+              </a>
+              <button class="btn btn-cyan" style="font-size: 0.85rem;" onclick="loadAttendanceLogs()">
+                <i data-lucide="refresh-cw" style="width: 16px;"></i>
+                <span>Refresh</span>
+              </button>
+            </div>
+          </div>
+
+          <div class="table-responsive">
+            <table class="admin-table">
+              <thead>
+                <tr>
+                  <th>User</th>
+                  <th>Department</th>
+                  <th>Date</th>
+                  <th>Time Clocked</th>
+                  <th>Status</th>
+                  <th>AI Match & PAD Score</th>
+                  <th>Kiosk Terminal</th>
+                </tr>
+              </thead>
+              <tbody id="attendanceTableBody">
+                <!-- Dynamically populated via admin.js -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==================== TAB 5: SYSTEM SETTINGS ==================== -->
+      <section id="tab-settings" class="tab-pane">
+        <div class="glass-panel" style="max-width: 720px; margin: 0 auto; padding: 32px;">
+          <h2 style="font-size: 1.3rem; font-weight: 700; margin-bottom: 6px;">AI Engine & Security Configuration</h2>
+          <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 24px;">
+            Tune recognition match thresholds, anti-spoofing sensitivities, and late cutoff rules.
+          </p>
+
+          <form id="settingsForm">
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 18px;">
+              <div class="form-group">
+                <label class="form-label" for="cfgMatchThresh">ArcFace Match Threshold (Cosine Sim)</label>
+                <input type="number" step="0.01" min="0.1" max="1.0" id="cfgMatchThresh" class="form-control" value="{{ settings.get('match_thresh', '0.45') }}" required>
+                <small style="color: var(--text-dim); font-size: 0.75rem;">Default: 0.45. Higher values require stricter facial similarity.</small>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="cfgMargin">Runner-up Margin Separation</label>
+                <input type="number" step="0.01" min="0.01" max="0.5" id="cfgMargin" class="form-control" value="{{ settings.get('margin', '0.08') }}" required>
+                <small style="color: var(--text-dim); font-size: 0.75rem;">Default: 0.08. Reject matches if runner-up is too close.</small>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="cfgLiveScoreThresh">MiniFASNet Liveness Threshold (PAD)</label>
+                <input type="number" step="0.01" min="0.1" max="1.0" id="cfgLiveScoreThresh" class="form-control" value="{{ settings.get('live_score_thresh', '0.68') }}" required>
+                <small style="color: var(--text-dim); font-size: 0.75rem;">Default: 0.68. Probability that the face is real (not photo/screen).</small>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="cfgCooldown">Scan Cooldown Window (Minutes)</label>
+                <input type="number" min="1" max="120" id="cfgCooldown" class="form-control" value="{{ settings.get('cooldown_minutes', '5') }}" required>
+                <small style="color: var(--text-dim); font-size: 0.75rem;">Prevents duplicate check-ins if someone stands near the kiosk.</small>
+              </div>
+            </div>
+
+            <div class="form-group" style="margin-top: 10px;">
+              <label class="form-label" for="cfgLateTime">Late Arrival Cutoff Time (HH:MM)</label>
+              <input type="time" id="cfgLateTime" class="form-control" value="{{ settings.get('late_cutoff_time', '09:30') }}" style="max-width: 200px;" required>
+            </div>
+
+            <button type="submit" class="btn btn-primary" style="margin-top: 16px; padding: 12px 28px;">
+              <i data-lucide="save" style="width: 16px;"></i>
+              <span>Save System Settings</span>
+            </button>
+          </form>
+        </div>
+      </section>
+
+    </main>
+  </div>
+</body>
+</html>

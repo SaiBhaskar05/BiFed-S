@@ -1,0 +1,36 @@
+# Python
+venv/
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+dist/
+build/
+
+# Runtime data (generated at runtime, should not be committed)
+attendance_system.db
+face_db.npz
+face_system.log
+
+# Uploads (user-generated runtime data)
+uploads/avatars/*.jpg
+uploads/avatars/*.png
+uploads/verifications/*.jpg
+uploads/verifications/*.png
+
+# Silent-Face-Anti-Spoofing cloned repo internals
+Silent-Face-Anti-Spoofing/.git/
+Silent-Face-Anti-Spoofing/__pycache__/
+Silent-Face-Anti-Spoofing/src/__pycache__/
+Silent-Face-Anti-Spoofing/src/data_io/__pycache__/
+Silent-Face-Anti-Spoofing/src/model_lib/__pycache__/
+Silent-Face-Anti-Spoofing/datasets/
+Silent-Face-Anti-Spoofing/images/
+
+# IDE / OS
+.vscode/
+.idea/
+*.swp
+*.swo
+Thumbs.db
+.DS_Store

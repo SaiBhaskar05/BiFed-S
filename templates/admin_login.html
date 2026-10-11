@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Portal Login | Biometric AI</title>
+  <link rel="stylesheet" href="/static/css/main.css">
+  <link rel="stylesheet" href="/static/css/auth.css">
+  <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+  <div class="auth-wrapper">
+    <a href="/" style="position: absolute; top: 28px; left: 28px; color: var(--text-muted); text-decoration: none; display: inline-flex; align-items: center; gap: 8px; font-size: 0.9rem;">
+      <i data-lucide="arrow-left" style="width: 18px;"></i>
+      <span>Back to Portals</span>
+    </a>
+
+    <div class="glass-panel auth-card">
+      <div class="auth-header">
+        <div class="portal-icon-wrapper" style="margin: 0 auto 16px auto;">
+          <i data-lucide="shield-alert"></i>
+        </div>
+        <h1 class="auth-title">Administrator Login</h1>
+        <p class="auth-subtitle">Enter your security credentials to access system controls</p>
+      </div>
+
+      <form id="adminLoginForm">
+        <div class="form-group">
+          <label class="form-label" for="username">Admin Username</label>
+          <input type="text" id="username" class="form-control" placeholder="admin" required autofocus>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="password">Security Password</label>
+          <input type="password" id="password" class="form-control" placeholder="••••••••" required>
+        </div>
+
+        <div id="errorMsg" style="display: none; padding: 10px 14px; background: rgba(239,68,68,0.15); border: 1px solid rgba(239,68,68,0.3); border-radius: var(--radius-sm); color: #fca5a5; font-size: 0.85rem; margin-bottom: 16px;"></div>
+
+        <button type="submit" id="submitBtn" class="btn btn-primary" style="width: 100%; height: 46px;">
+          <span>Sign In to Admin Portal</span>
+          <i data-lucide="lock" style="width: 16px;"></i>
+        </button>
+      </form>
+
+      <div style="margin-top: 24px; padding-top: 16px; border-top: 1px solid var(--border); text-align: center; font-size: 0.82rem; color: var(--text-dim);">
+        Default login: <span style="color: var(--primary); font-family: var(--font-mono);">admin / admin123</span>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    lucide.createIcons();
+
+    document.getElementById("adminLoginForm").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const btn = document.getElementById("submitBtn");
+      const errBox = document.getElementById("errorMsg");
+      const username = document.getElementById("username").value.trim();
+      const password = document.getElementById("password").value;
+
+      btn.disabled = true;
+      btn.innerHTML = `<i data-lucide="loader" class="spin" style="width:16px;"></i> Verifying...`;
+      errBox.style.display = "none";
+
+      try {
+        const res = await fetch("/api/admin/login", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ username, password })
+        });
+        const data = await res.json();
+        if (data.success) {
+          window.location.href = data.redirect || "/admin/dashboard";
+        } else {
+          errBox.textContent = data.message || "Invalid credentials";
+          errBox.style.display = "block";
+          btn.disabled = false;
+          btn.innerHTML = `<span>Sign In to Admin Portal</span> <i data-lucide="lock" style="width: 16px;"></i>`;
+          lucide.createIcons();
+        }
+      } catch (err) {
+        errBox.textContent = "Server connection error. Please try again.";
+        errBox.style.display = "block";
+        btn.disabled = false;
+        btn.innerHTML = `<span>Sign In to Admin Portal</span> <i data-lucide="lock" style="width: 16px;"></i>`;
+        lucide.createIcons();
+      }
+    });
+  </script>
+</body>
+</html>
