@@ -1,11 +1,25 @@
-# BiFed-S — Biometric Face Recognition & Continuous Attendance System
+# BiFed-S — Face Recognition & Anti-Spoofing Module
 
-> **Enterprise-grade real-time face recognition attendance system with multi-layered anti-spoofing (Presentation Attack Detection), continuous kiosk scanning, and a full admin management portal.**
+> **Biometric Face Recognition and Presentation Attack Detection (PAD) Module for BiFed-S — A Multimodal Federated Learning Framework.**
+> Enterprise-grade real-time face recognition and liveness verification with multi-layered anti-spoofing, continuous edge kiosk scanning, and administrative portal.
 
 ![Python](https://img.shields.io/badge/Python-3.9+-blue?logo=python&logoColor=white)
 ![FastAPI](https://img.shields.io/badge/FastAPI-0.100+-009688?logo=fastapi&logoColor=white)
 ![PyTorch](https://img.shields.io/badge/PyTorch-2.0+-EE4C2C?logo=pytorch&logoColor=white)
+![Federated Learning](https://img.shields.io/badge/Module-BiFed--S%20Multimodal%20FL-orange)
 ![License](https://img.shields.io/badge/License-MIT-green)
+
+---
+
+## 📌 Context within BiFed-S
+
+**BiFed-S** is a comprehensive **Multimodal Federated Learning** research and deployment framework designed for privacy-preserving, distributed biometric intelligence. 
+
+This repository houses the **Face Recognition & Anti-Spoofing Edge Module**, which provides:
+- **Local Feature Extraction**: Extracts normalized 512-dimensional ArcFace deep embeddings on edge nodes without transmitting raw face images to central servers.
+- **Robust Anti-Spoofing (PAD)**: Dual-scale MiniFASNet passive liveness detection to ensure edge inputs are bona-fide real users.
+- **Autonomous Edge Attendance Kiosk**: High-throughput (~10 FPS) continuous local biometric verification.
+- **Federated Client Readiness**: Serves as the visual modality client endpoint that locally computes biometric representations and loss gradients for upstream multimodal federated aggregation (e.g., combined with audio/speech and behavioral modalities).
 
 ---
 
@@ -29,7 +43,7 @@
 
 ## Overview
 
-**BiFed-S** eliminates manual attendance tracking entirely. Employees simply walk up to a kiosk camera — the system instantly detects their face, verifies they are a **real person** (not a photograph, screen replay, or mask), identifies **who they are** from a registered gallery, and logs their attendance — all in under **150 milliseconds**.
+As part of the **BiFed-S Multimodal Federated Learning** architecture, this module handles the high-stakes visual authentication layer. In traditional setups, biometric identification requires streaming high-resolution faces to a cloud server, violating user privacy. This module performs face detection, quality gating, dual-stream anti-spoofing, and 512-d ArcFace feature extraction **strictly at the local edge kiosk**. Employees simply walk up to a kiosk camera — the system instantly detects their face, verifies they are a **real person** (not a photograph, screen replay, or mask), identifies **who they are** from a registered local gallery, and logs their attendance — all in under **150 milliseconds**.
 
 The system is split into two completely independent portals:
 
@@ -84,11 +98,22 @@ The system is split into two completely independent portals:
 │  ┌─────────────┐  │  │  SQLite Tables:       │  │  Names[]    │
 │  │ FaceEngine  │  │  │  • admins             │  │  Embeddings │
 │  │ (InsightFace)│  │  │  • kiosks             │  │  (512-d)    │
-│  ├─────────────┤  │  │  • users              │  └─────────────┘
-│  │ SpoofDetect │  │  │  • attendance_logs    │
-│  │ (MiniFASNet)│  │  │  • settings           │
-│  └─────────────┘  │  └──────────────────────┘
-└──────────────────┘
+│  ├─────────────┤  │  │  • users              │  └──────┬──────┘
+│  │ SpoofDetect │  │  │  • attendance_logs    │         │
+│  │ (MiniFASNet)│  │  │  • settings           │         │
+│  └─────────────┘  │  └──────────────────────┘         │
+└─────────┬────────┘                                     │
+          │                                              │
+          └──────────────────────┬───────────────────────┘
+                                 │
+                                 ▼
+┌─────────────────────────────────────────────────────────────┐
+│  BiFed-S Multimodal Federated Learning Interface (Upstream)  │
+│  • Edge Biometric Representations (512-d ArcFace Embeddings)│
+│  • Differential Privacy & Local Gradient Computation        │
+│  • Multimodal Fusion Layer (Face + Audio / Iris / Keystroke)│
+│  • FedAvg / FedProx Aggregation with Central FL Server      │
+└─────────────────────────────────────────────────────────────┘
 ```
 
 ---
@@ -409,14 +434,15 @@ Target FAR   threshold   resulting FRR
 
 | # | Improvement | Why It's Needed | Suggested Approach |
 |---|---|---|---|
-| 11 | **Federated Learning for Privacy** | Centralized face data storage raises privacy concerns in multi-branch deployments | Implement federated model updates where each branch trains locally and shares only model gradients, not raw face data |
-| 12 | **Depth-Based Liveness (3D Camera)** | Passive liveness with RGB-only cameras can be defeated by high-quality 3D-printed masks | Integrate Intel RealSense or Azure Kinect depth cameras for depth-map-based liveness verification |
-| 13 | **Continuous Model Retraining** | Anti-spoofing models may become less effective as new attack vectors emerge | Implement a feedback loop where rejected attempts are reviewed by admins and used to fine-tune the MiniFASNet models periodically |
-| 14 | **Edge Deployment (Raspberry Pi / Jetson)** | Some deployments need standalone hardware without a PC server | Optimize models with TensorRT, quantize to INT8, and deploy on NVIDIA Jetson Nano/Orin |
-| 15 | **Blockchain Attendance Ledger** | Attendance records could be tampered with if someone gains database access | Write attendance hashes to a permissioned blockchain (Hyperledger Fabric) for tamper-proof audit trails |
-| 16 | **Multi-Factor Authentication** | Face-only authentication may not meet the highest security standards | Combine face recognition with RFID badge, fingerprint, or OTP as a second factor |
-| 17 | **Cross-Platform Voice** | Windows SAPI limits deployment to Windows machines | Replace with `pyttsx3` (cross-platform) or Google Cloud TTS for platform-independent voice guidance |
-| 18 | **WebSocket Real-Time Streaming** | Current polling-based frame processing (HTTP POST per frame) adds overhead | Replace frame submission with WebSocket streaming for lower latency and reduced HTTP overhead |
+| 11 | **Federated Learning Protocol (FedAvg / FedProx)** | Cross-organization and multi-branch biometric model improvement without sharing raw face images | Deploy local client training loop exporting model gradients/weights with Differential Privacy ($\epsilon, \delta$) to central BiFed-S aggregation server |
+| 12 | **Multimodal Biometric Fusion** | Unimodal face authentication can degrade under occlusions or poor lighting; multimodal biometric verification is significantly more robust | Fuse 512-d face embeddings with voiceprint (wav2vec/ECAPA-TDNN) and keystroke dynamics using attention-based multimodal fusion |
+| 13 | **Depth-Based Liveness (3D Camera)** | Passive liveness with RGB-only cameras can be defeated by high-quality 3D-printed masks | Integrate Intel RealSense or Azure Kinect depth cameras for depth-map-based liveness verification |
+| 14 | **Continuous Model Retraining & Active Learning** | Anti-spoofing models may degrade as novel physical and digital presentation attack vectors emerge | Implement edge uncertainty sampling where borderline attempts are queued for federated fine-tuning rounds |
+| 15 | **Edge Hardware Acceleration (Jetson / NPU)** | Some standalone kiosks operate on low-power embedded hardware without discrete desktop GPUs | Quantize models to INT8 using TensorRT or ONNX Runtime OpenVINO/DirectML and deploy on NVIDIA Jetson Nano/Orin |
+| 16 | **Blockchain Attendance Ledger** | Attendance records could be tampered with if someone gains database access | Write attendance hashes to a permissioned blockchain (Hyperledger Fabric) for tamper-proof audit trails |
+| 17 | **Multi-Factor Authentication** | Face-only authentication may not meet the highest security standards | Combine face recognition with RFID badge, fingerprint, or OTP as a second factor |
+| 18 | **Cross-Platform Voice** | Windows SAPI limits deployment to Windows machines | Replace with `pyttsx3` (cross-platform) or Google Cloud TTS for platform-independent voice guidance |
+| 19 | **WebSocket Real-Time Streaming** | Polling-based frame processing (HTTP POST per frame) adds round-trip network overhead | Replace frame submission with WebSocket binary streaming for lower latency and reduced HTTP overhead |
 
 ---
 
